@@ -11,12 +11,12 @@ result per conversation.
 
 ## Status
 
-Built layer by layer. Current: **Layer 0 — scaffold, git, config.**
+Built layer by layer. Current: **Layer 1 — input validation & canonical hashing.**
 
 | Layer | State |
 | --- | --- |
 | 0 Scaffold & config | ✅ |
-| 1 Input schema & hashing | ⬜ |
+| 1 Input schema & hashing | ✅ |
 | 2 Sentiment model wrapper | ⬜ |
 | 3 The two metrics | ⬜ |
 | 4 Result assembly | ⬜ |

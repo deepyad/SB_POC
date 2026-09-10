@@ -45,6 +45,8 @@ markers = [
 line-length = 100
 target-version = "py311"
 src = ["src", "tests"]
+# data/ is copied verbatim from the assignment (incl. make_dataset.py) — not ours to lint.
+extend-exclude = ["data"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]

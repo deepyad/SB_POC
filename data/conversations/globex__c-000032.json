@@ -1,0 +1,20 @@
+{
+  "conversation_id": "c-000032",
+  "tenant_id": "globex",
+  "channel": "chat",
+  "started_at": "2026-03-02T09:14:00Z",
+  "turns": [
+    {
+      "seq": 0,
+      "role": "bot",
+      "ts": "2026-03-02T09:14:00Z",
+      "text": "Hi! I'm the automated assistant. How can I help?"
+    },
+    {
+      "seq": 1,
+      "role": "bot",
+      "ts": "2026-03-02T09:14:40Z",
+      "text": "I didn't understand that. Transferring you."
+    }
+  ]
+}

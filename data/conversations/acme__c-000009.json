@@ -1,0 +1,38 @@
+{
+  "conversation_id": "c-000009",
+  "tenant_id": "acme",
+  "channel": "email",
+  "started_at": "2026-03-02T09:14:00Z",
+  "turns": [
+    {
+      "seq": 0,
+      "role": "customer",
+      "ts": "2026-03-02T09:14:00Z",
+      "text": "Not a complaint exactly, but the invoice layout is quite hard to read."
+    },
+    {
+      "seq": 1,
+      "role": "agent",
+      "ts": "2026-03-02T09:14:40Z",
+      "text": "Thanks — what specifically is causing trouble?"
+    },
+    {
+      "seq": 2,
+      "role": "customer",
+      "ts": "2026-03-02T09:15:20Z",
+      "text": "The tax line is below the total, which trips up our finance team every month."
+    },
+    {
+      "seq": 3,
+      "role": "agent",
+      "ts": "2026-03-02T09:16:00Z",
+      "text": "That's fair. I'll pass it to the billing team as feedback."
+    },
+    {
+      "seq": 4,
+      "role": "customer",
+      "ts": "2026-03-02T09:16:40Z",
+      "text": "Appreciated, though I suspect it'll sit in a backlog."
+    }
+  ]
+}

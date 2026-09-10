@@ -1,0 +1,56 @@
+{
+  "conversation_id": "c-000002",
+  "tenant_id": "acme",
+  "channel": "chat",
+  "started_at": "2026-03-02T09:14:00Z",
+  "turns": [
+    {
+      "seq": 0,
+      "role": "customer",
+      "ts": "2026-03-02T09:14:00Z",
+      "text": "I've been charged twice for the same order. This is unacceptable."
+    },
+    {
+      "seq": 1,
+      "role": "agent",
+      "ts": "2026-03-02T09:14:40Z",
+      "text": "I'm sorry about that — I can see two authorisations on the account. Let me check."
+    },
+    {
+      "seq": 2,
+      "role": "customer",
+      "ts": "2026-03-02T09:15:20Z",
+      "text": "I want the second one gone today, not in five working days."
+    },
+    {
+      "seq": 3,
+      "role": "agent",
+      "ts": "2026-03-02T09:16:00Z",
+      "text": "Confirmed it's a duplicate. I've voided the second authorisation just now."
+    },
+    {
+      "seq": 4,
+      "role": "customer",
+      "ts": "2026-03-02T09:16:40Z",
+      "text": "Oh. So it won't actually leave my account?"
+    },
+    {
+      "seq": 5,
+      "role": "agent",
+      "ts": "2026-03-02T09:17:20Z",
+      "text": "Correct — it was never captured, so nothing will be taken. You'll see it drop off within the hour."
+    },
+    {
+      "seq": 6,
+      "role": "customer",
+      "ts": "2026-03-02T09:18:00Z",
+      "text": "That's a relief. Thanks for sorting it out so quickly."
+    },
+    {
+      "seq": 7,
+      "role": "customer",
+      "ts": "2026-03-02T09:18:40Z",
+      "text": "Really appreciate you actually explaining what happened."
+    }
+  ]
+}

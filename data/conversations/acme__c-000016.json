@@ -1,0 +1,14 @@
+{
+  "conversation_id": "c-000016",
+  "tenant_id": "acme",
+  "channel": "chat",
+  "started_at": "2026-03-02T09:14:00Z",
+  "turns": [
+    {
+      "seq": 0,
+      "role": "customer",
+      "ts": "2026-03-02T09:14:00Z",
+      "text": "Do you ship to Ireland?"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "conversation_id": "c-000022",
+  "tenant_id": "acme",
+  "channel": "chat",
+  "started_at": "2026-03-02T09:14:00Z",
+  "turns": [
+    {
+      "seq": 0,
+      "role": "customer",
+      "ts": "2026-03-02T09:14:00Z",
+      "text": "😡😡😡"
+    },
+    {
+      "seq": 1,
+      "role": "agent",
+      "ts": "2026-03-02T09:14:40Z",
+      "text": "I can see you're frustrated. What's happened?"
+    },
+    {
+      "seq": 2,
+      "role": "customer",
+      "ts": "2026-03-02T09:15:20Z",
+      "text": "?!?!"
+    },
+    {
+      "seq": 3,
+      "role": "agent",
+      "ts": "2026-03-02T09:16:00Z",
+      "text": "Could you tell me a little more so I can help?"
+    },
+    {
+      "seq": 4,
+      "role": "customer",
+      "ts": "2026-03-02T09:16:40Z",
+      "text": "👍"
+    },
+    {
+      "seq": 5,
+      "role": "customer",
+      "ts": "2026-03-02T09:17:20Z",
+      "text": "..."
+    }
+  ]
+}

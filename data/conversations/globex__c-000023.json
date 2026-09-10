@@ -1,0 +1,44 @@
+{
+  "conversation_id": "c-000023",
+  "tenant_id": "globex",
+  "channel": "email",
+  "started_at": "2026-03-02T09:14:00Z",
+  "turns": [
+    {
+      "seq": 0,
+      "role": "customer",
+      "ts": "2026-03-02T09:14:00Z",
+      "text": "Oh fantastic, another outage. Just what I needed on a Monday."
+    },
+    {
+      "seq": 1,
+      "role": "agent",
+      "ts": "2026-03-02T09:14:40Z",
+      "text": "Apologies for the disruption — we're investigating now."
+    },
+    {
+      "seq": 2,
+      "role": "customer",
+      "ts": "2026-03-02T09:15:20Z",
+      "text": "No, honestly, it's not like we don't have deadlines or anything."
+    },
+    {
+      "seq": 3,
+      "role": "agent",
+      "ts": "2026-03-02T09:16:00Z",
+      "text": "Understood. I'll update you as soon as I have a root cause."
+    },
+    {
+      "seq": 4,
+      "role": "customer",
+      "ts": "2026-03-02T09:16:40Z",
+      "text": "Wonderful. Can't wait."
+    },
+    {
+      "seq": 5,
+      "role": "customer",
+      "ts": "2026-03-02T09:17:20Z",
+      "text": "I wouldn't say I'm not unhappy about this."
+    }
+  ]
+}

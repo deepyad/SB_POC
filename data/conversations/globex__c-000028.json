@@ -1,0 +1,1208 @@
+{
+  "conversation_id": "c-000028",
+  "tenant_id": "globex",
+  "channel": "chat",
+  "started_at": "2026-03-02T09:14:00Z",
+  "turns": [
+    {
+      "seq": 0,
+      "role": "customer",
+      "ts": "2026-03-02T09:14:00Z",
+      "text": "It's still not working."
+    },
+    {
+      "seq": 1,
+      "role": "agent",
+      "ts": "2026-03-02T09:14:40Z",
+      "text": "Let me check that on my side."
+    },
+    {
+      "seq": 2,
+      "role": "customer",
+      "ts": "2026-03-02T09:15:20Z",
+      "text": "I tried that, same error."
+    },
+    {
+      "seq": 3,
+      "role": "agent",
+      "ts": "2026-03-02T09:16:00Z",
+      "text": "Can you try clearing the cache?"
+    },
+    {
+      "seq": 4,
+      "role": "customer",
+      "ts": "2026-03-02T09:16:40Z",
+      "text": "Restarted, no change."
+    },
+    {
+      "seq": 5,
+      "role": "agent",
+      "ts": "2026-03-02T09:17:20Z",
+      "text": "What does the console show?"
+    },
+    {
+      "seq": 6,
+      "role": "customer",
+      "ts": "2026-03-02T09:18:00Z",
+      "text": "Now it's showing a different error."
+    },
+    {
+      "seq": 7,
+      "role": "agent",
+      "ts": "2026-03-02T09:18:40Z",
+      "text": "Please restart the client and retry."
+    },
+    {
+      "seq": 8,
+      "role": "customer",
+      "ts": "2026-03-02T09:19:20Z",
+      "text": "This is taking a very long time."
+    },
+    {
+      "seq": 9,
+      "role": "agent",
+      "ts": "2026-03-02T09:20:00Z",
+      "text": "I'm checking the server logs now."
+    },
+    {
+      "seq": 10,
+      "role": "customer",
+      "ts": "2026-03-02T09:20:40Z",
+      "text": "OK that step worked."
+    },
+    {
+      "seq": 11,
+      "role": "agent",
+      "ts": "2026-03-02T09:21:20Z",
+      "text": "That narrows it down, thanks."
+    },
+    {
+      "seq": 12,
+      "role": "customer",
+      "ts": "2026-03-02T09:22:00Z",
+      "text": "Back to the previous error now."
+    },
+    {
+      "seq": 13,
+      "role": "agent",
+      "ts": "2026-03-02T09:22:40Z",
+      "text": "Can you confirm the version number?"
+    },
+    {
+      "seq": 14,
+      "role": "customer",
+      "ts": "2026-03-02T09:23:20Z",
+      "text": "I've cleared the cache as asked."
+    },
+    {
+      "seq": 15,
+      "role": "agent",
+      "ts": "2026-03-02T09:24:00Z",
+      "text": "Trying a different configuration."
+    },
+    {
+      "seq": 16,
+      "role": "customer",
+      "ts": "2026-03-02T09:24:40Z",
+      "text": "Nothing in the console output."
+    },
+    {
+      "seq": 17,
+      "role": "agent",
+      "ts": "2026-03-02T09:25:20Z",
+      "text": "I've applied a change — retry now."
+    },
+    {
+      "seq": 18,
+      "role": "customer",
+      "ts": "2026-03-02T09:26:00Z",
+      "text": "Are we getting anywhere with this?"
+    },
+    {
+      "seq": 19,
+      "role": "agent",
+      "ts": "2026-03-02T09:26:40Z",
+      "text": "Bear with me while I escalate this."
+    },
+    {
+      "seq": 20,
+      "role": "customer",
+      "ts": "2026-03-02T09:27:20Z",
+      "text": "It's still not working."
+    },
+    {
+      "seq": 21,
+      "role": "agent",
+      "ts": "2026-03-02T09:28:00Z",
+      "text": "Let me check that on my side."
+    },
+    {
+      "seq": 22,
+      "role": "customer",
+      "ts": "2026-03-02T09:28:40Z",
+      "text": "I tried that, same error."
+    },
+    {
+      "seq": 23,
+      "role": "agent",
+      "ts": "2026-03-02T09:29:20Z",
+      "text": "Can you try clearing the cache?"
+    },
+    {
+      "seq": 24,
+      "role": "system",
+      "ts": "2026-03-02T09:30:00Z",
+      "text": "Session checkpoint 1."
+    },
+    {
+      "seq": 25,
+      "role": "agent",
+      "ts": "2026-03-02T09:30:40Z",
+      "text": "What does the console show?"
+    },
+    {
+      "seq": 26,
+      "role": "customer",
+      "ts": "2026-03-02T09:31:20Z",
+      "text": "Now it's showing a different error."
+    },
+    {
+      "seq": 27,
+      "role": "agent",
+      "ts": "2026-03-02T09:32:00Z",
+      "text": "Please restart the client and retry."
+    },
+    {
+      "seq": 28,
+      "role": "customer",
+      "ts": "2026-03-02T09:32:40Z",
+      "text": "This is taking a very long time."
+    },
+    {
+      "seq": 29,
+      "role": "agent",
+      "ts": "2026-03-02T09:33:20Z",
+      "text": "I'm checking the server logs now."
+    },
+    {
+      "seq": 30,
+      "role": "customer",
+      "ts": "2026-03-02T09:34:00Z",
+      "text": "OK that step worked."
+    },
+    {
+      "seq": 31,
+      "role": "agent",
+      "ts": "2026-03-02T09:34:40Z",
+      "text": "That narrows it down, thanks."
+    },
+    {
+      "seq": 32,
+      "role": "customer",
+      "ts": "2026-03-02T09:35:20Z",
+      "text": "Back to the previous error now."
+    },
+    {
+      "seq": 33,
+      "role": "agent",
+      "ts": "2026-03-02T09:36:00Z",
+      "text": "Can you confirm the version number?"
+    },
+    {
+      "seq": 34,
+      "role": "customer",
+      "ts": "2026-03-02T09:36:40Z",
+      "text": "I've cleared the cache as asked."
+    },
+    {
+      "seq": 35,
+      "role": "agent",
+      "ts": "2026-03-02T09:37:20Z",
+      "text": "Trying a different configuration."
+    },
+    {
+      "seq": 36,
+      "role": "customer",
+      "ts": "2026-03-02T09:38:00Z",
+      "text": "Nothing in the console output."
+    },
+    {
+      "seq": 37,
+      "role": "agent",
+      "ts": "2026-03-02T09:38:40Z",
+      "text": "I've applied a change — retry now."
+    },
+    {
+      "seq": 38,
+      "role": "customer",
+      "ts": "2026-03-02T09:39:20Z",
+      "text": "Are we getting anywhere with this?"
+    },
+    {
+      "seq": 39,
+      "role": "agent",
+      "ts": "2026-03-02T09:40:00Z",
+      "text": "Bear with me while I escalate this."
+    },
+    {
+      "seq": 40,
+      "role": "customer",
+      "ts": "2026-03-02T09:40:40Z",
+      "text": "It's still not working."
+    },
+    {
+      "seq": 41,
+      "role": "agent",
+      "ts": "2026-03-02T09:41:20Z",
+      "text": "Let me check that on my side."
+    },
+    {
+      "seq": 42,
+      "role": "customer",
+      "ts": "2026-03-02T09:42:00Z",
+      "text": "I tried that, same error."
+    },
+    {
+      "seq": 43,
+      "role": "agent",
+      "ts": "2026-03-02T09:42:40Z",
+      "text": "Can you try clearing the cache?"
+    },
+    {
+      "seq": 44,
+      "role": "customer",
+      "ts": "2026-03-02T09:43:20Z",
+      "text": "Restarted, no change."
+    },
+    {
+      "seq": 45,
+      "role": "agent",
+      "ts": "2026-03-02T09:44:00Z",
+      "text": "What does the console show?"
+    },
+    {
+      "seq": 46,
+      "role": "customer",
+      "ts": "2026-03-02T09:44:40Z",
+      "text": "Now it's showing a different error."
+    },
+    {
+      "seq": 47,
+      "role": "agent",
+      "ts": "2026-03-02T09:45:20Z",
+      "text": "Please restart the client and retry."
+    },
+    {
+      "seq": 48,
+      "role": "customer",
+      "ts": "2026-03-02T09:46:00Z",
+      "text": "This is taking a very long time."
+    },
+    {
+      "seq": 49,
+      "role": "system",
+      "ts": "2026-03-02T09:46:40Z",
+      "text": "Session checkpoint 2."
+    },
+    {
+      "seq": 50,
+      "role": "customer",
+      "ts": "2026-03-02T09:47:20Z",
+      "text": "OK that step worked."
+    },
+    {
+      "seq": 51,
+      "role": "agent",
+      "ts": "2026-03-02T09:48:00Z",
+      "text": "That narrows it down, thanks."
+    },
+    {
+      "seq": 52,
+      "role": "customer",
+      "ts": "2026-03-02T09:48:40Z",
+      "text": "Back to the previous error now."
+    },
+    {
+      "seq": 53,
+      "role": "agent",
+      "ts": "2026-03-02T09:49:20Z",
+      "text": "Can you confirm the version number?"
+    },
+    {
+      "seq": 54,
+      "role": "customer",
+      "ts": "2026-03-02T09:50:00Z",
+      "text": "I've cleared the cache as asked."
+    },
+    {
+      "seq": 55,
+      "role": "agent",
+      "ts": "2026-03-02T09:50:40Z",
+      "text": "Trying a different configuration."
+    },
+    {
+      "seq": 56,
+      "role": "customer",
+      "ts": "2026-03-02T09:51:20Z",
+      "text": "Nothing in the console output."
+    },
+    {
+      "seq": 57,
+      "role": "agent",
+      "ts": "2026-03-02T09:52:00Z",
+      "text": "I've applied a change — retry now."
+    },
+    {
+      "seq": 58,
+      "role": "customer",
+      "ts": "2026-03-02T09:52:40Z",
+      "text": "Are we getting anywhere with this?"
+    },
+    {
+      "seq": 59,
+      "role": "agent",
+      "ts": "2026-03-02T09:53:20Z",
+      "text": "Bear with me while I escalate this."
+    },
+    {
+      "seq": 60,
+      "role": "customer",
+      "ts": "2026-03-02T09:54:00Z",
+      "text": "It's still not working."
+    },
+    {
+      "seq": 61,
+      "role": "agent",
+      "ts": "2026-03-02T09:54:40Z",
+      "text": "Let me check that on my side."
+    },
+    {
+      "seq": 62,
+      "role": "customer",
+      "ts": "2026-03-02T09:55:20Z",
+      "text": "I tried that, same error."
+    },
+    {
+      "seq": 63,
+      "role": "agent",
+      "ts": "2026-03-02T09:56:00Z",
+      "text": "Can you try clearing the cache?"
+    },
+    {
+      "seq": 64,
+      "role": "customer",
+      "ts": "2026-03-02T09:56:40Z",
+      "text": "Restarted, no change."
+    },
+    {
+      "seq": 65,
+      "role": "agent",
+      "ts": "2026-03-02T09:57:20Z",
+      "text": "What does the console show?"
+    },
+    {
+      "seq": 66,
+      "role": "customer",
+      "ts": "2026-03-02T09:58:00Z",
+      "text": "Now it's showing a different error."
+    },
+    {
+      "seq": 67,
+      "role": "agent",
+      "ts": "2026-03-02T09:58:40Z",
+      "text": "Please restart the client and retry."
+    },
+    {
+      "seq": 68,
+      "role": "customer",
+      "ts": "2026-03-02T09:59:20Z",
+      "text": "This is taking a very long time."
+    },
+    {
+      "seq": 69,
+      "role": "agent",
+      "ts": "2026-03-02T10:00:00Z",
+      "text": "I'm checking the server logs now."
+    },
+    {
+      "seq": 70,
+      "role": "customer",
+      "ts": "2026-03-02T10:00:40Z",
+      "text": "OK that step worked."
+    },
+    {
+      "seq": 71,
+      "role": "agent",
+      "ts": "2026-03-02T10:01:20Z",
+      "text": "That narrows it down, thanks."
+    },
+    {
+      "seq": 72,
+      "role": "customer",
+      "ts": "2026-03-02T10:02:00Z",
+      "text": "Back to the previous error now."
+    },
+    {
+      "seq": 73,
+      "role": "agent",
+      "ts": "2026-03-02T10:02:40Z",
+      "text": "Can you confirm the version number?"
+    },
+    {
+      "seq": 74,
+      "role": "system",
+      "ts": "2026-03-02T10:03:20Z",
+      "text": "Session checkpoint 3."
+    },
+    {
+      "seq": 75,
+      "role": "agent",
+      "ts": "2026-03-02T10:04:00Z",
+      "text": "Trying a different configuration."
+    },
+    {
+      "seq": 76,
+      "role": "customer",
+      "ts": "2026-03-02T10:04:40Z",
+      "text": "Nothing in the console output."
+    },
+    {
+      "seq": 77,
+      "role": "agent",
+      "ts": "2026-03-02T10:05:20Z",
+      "text": "I've applied a change — retry now."
+    },
+    {
+      "seq": 78,
+      "role": "customer",
+      "ts": "2026-03-02T10:06:00Z",
+      "text": "Are we getting anywhere with this?"
+    },
+    {
+      "seq": 79,
+      "role": "agent",
+      "ts": "2026-03-02T10:06:40Z",
+      "text": "Bear with me while I escalate this."
+    },
+    {
+      "seq": 80,
+      "role": "customer",
+      "ts": "2026-03-02T10:07:20Z",
+      "text": "It's still not working."
+    },
+    {
+      "seq": 81,
+      "role": "agent",
+      "ts": "2026-03-02T10:08:00Z",
+      "text": "Let me check that on my side."
+    },
+    {
+      "seq": 82,
+      "role": "customer",
+      "ts": "2026-03-02T10:08:40Z",
+      "text": "I tried that, same error."
+    },
+    {
+      "seq": 83,
+      "role": "agent",
+      "ts": "2026-03-02T10:09:20Z",
+      "text": "Can you try clearing the cache?"
+    },
+    {
+      "seq": 84,
+      "role": "customer",
+      "ts": "2026-03-02T10:10:00Z",
+      "text": "Restarted, no change."
+    },
+    {
+      "seq": 85,
+      "role": "agent",
+      "ts": "2026-03-02T10:10:40Z",
+      "text": "What does the console show?"
+    },
+    {
+      "seq": 86,
+      "role": "customer",
+      "ts": "2026-03-02T10:11:20Z",
+      "text": "Now it's showing a different error."
+    },
+    {
+      "seq": 87,
+      "role": "agent",
+      "ts": "2026-03-02T10:12:00Z",
+      "text": "Please restart the client and retry."
+    },
+    {
+      "seq": 88,
+      "role": "customer",
+      "ts": "2026-03-02T10:12:40Z",
+      "text": "This is taking a very long time."
+    },
+    {
+      "seq": 89,
+      "role": "agent",
+      "ts": "2026-03-02T10:13:20Z",
+      "text": "I'm checking the server logs now."
+    },
+    {
+      "seq": 90,
+      "role": "customer",
+      "ts": "2026-03-02T10:14:00Z",
+      "text": "OK that step worked."
+    },
+    {
+      "seq": 91,
+      "role": "agent",
+      "ts": "2026-03-02T10:14:40Z",
+      "text": "That narrows it down, thanks."
+    },
+    {
+      "seq": 92,
+      "role": "customer",
+      "ts": "2026-03-02T10:15:20Z",
+      "text": "Back to the previous error now."
+    },
+    {
+      "seq": 93,
+      "role": "agent",
+      "ts": "2026-03-02T10:16:00Z",
+      "text": "Can you confirm the version number?"
+    },
+    {
+      "seq": 94,
+      "role": "customer",
+      "ts": "2026-03-02T10:16:40Z",
+      "text": "I've cleared the cache as asked."
+    },
+    {
+      "seq": 95,
+      "role": "agent",
+      "ts": "2026-03-02T10:17:20Z",
+      "text": "Trying a different configuration."
+    },
+    {
+      "seq": 96,
+      "role": "customer",
+      "ts": "2026-03-02T10:18:00Z",
+      "text": "Nothing in the console output."
+    },
+    {
+      "seq": 97,
+      "role": "agent",
+      "ts": "2026-03-02T10:18:40Z",
+      "text": "I've applied a change — retry now."
+    },
+    {
+      "seq": 98,
+      "role": "customer",
+      "ts": "2026-03-02T10:19:20Z",
+      "text": "Are we getting anywhere with this?"
+    },
+    {
+      "seq": 99,
+      "role": "system",
+      "ts": "2026-03-02T10:20:00Z",
+      "text": "Session checkpoint 4."
+    },
+    {
+      "seq": 100,
+      "role": "customer",
+      "ts": "2026-03-02T10:20:40Z",
+      "text": "It's still not working."
+    },
+    {
+      "seq": 101,
+      "role": "agent",
+      "ts": "2026-03-02T10:21:20Z",
+      "text": "Let me check that on my side."
+    },
+    {
+      "seq": 102,
+      "role": "customer",
+      "ts": "2026-03-02T10:22:00Z",
+      "text": "I tried that, same error."
+    },
+    {
+      "seq": 103,
+      "role": "agent",
+      "ts": "2026-03-02T10:22:40Z",
+      "text": "Can you try clearing the cache?"
+    },
+    {
+      "seq": 104,
+      "role": "customer",
+      "ts": "2026-03-02T10:23:20Z",
+      "text": "Restarted, no change."
+    },
+    {
+      "seq": 105,
+      "role": "agent",
+      "ts": "2026-03-02T10:24:00Z",
+      "text": "What does the console show?"
+    },
+    {
+      "seq": 106,
+      "role": "customer",
+      "ts": "2026-03-02T10:24:40Z",
+      "text": "Now it's showing a different error."
+    },
+    {
+      "seq": 107,
+      "role": "agent",
+      "ts": "2026-03-02T10:25:20Z",
+      "text": "Please restart the client and retry."
+    },
+    {
+      "seq": 108,
+      "role": "customer",
+      "ts": "2026-03-02T10:26:00Z",
+      "text": "This is taking a very long time."
+    },
+    {
+      "seq": 109,
+      "role": "agent",
+      "ts": "2026-03-02T10:26:40Z",
+      "text": "I'm checking the server logs now."
+    },
+    {
+      "seq": 110,
+      "role": "customer",
+      "ts": "2026-03-02T10:27:20Z",
+      "text": "OK that step worked."
+    },
+    {
+      "seq": 111,
+      "role": "agent",
+      "ts": "2026-03-02T10:28:00Z",
+      "text": "That narrows it down, thanks."
+    },
+    {
+      "seq": 112,
+      "role": "customer",
+      "ts": "2026-03-02T10:28:40Z",
+      "text": "Back to the previous error now."
+    },
+    {
+      "seq": 113,
+      "role": "agent",
+      "ts": "2026-03-02T10:29:20Z",
+      "text": "Can you confirm the version number?"
+    },
+    {
+      "seq": 114,
+      "role": "customer",
+      "ts": "2026-03-02T10:30:00Z",
+      "text": "I've cleared the cache as asked."
+    },
+    {
+      "seq": 115,
+      "role": "agent",
+      "ts": "2026-03-02T10:30:40Z",
+      "text": "Trying a different configuration."
+    },
+    {
+      "seq": 116,
+      "role": "customer",
+      "ts": "2026-03-02T10:31:20Z",
+      "text": "Nothing in the console output."
+    },
+    {
+      "seq": 117,
+      "role": "agent",
+      "ts": "2026-03-02T10:32:00Z",
+      "text": "I've applied a change — retry now."
+    },
+    {
+      "seq": 118,
+      "role": "customer",
+      "ts": "2026-03-02T10:32:40Z",
+      "text": "Are we getting anywhere with this?"
+    },
+    {
+      "seq": 119,
+      "role": "agent",
+      "ts": "2026-03-02T10:33:20Z",
+      "text": "Bear with me while I escalate this."
+    },
+    {
+      "seq": 120,
+      "role": "customer",
+      "ts": "2026-03-02T10:34:00Z",
+      "text": "It's still not working."
+    },
+    {
+      "seq": 121,
+      "role": "agent",
+      "ts": "2026-03-02T10:34:40Z",
+      "text": "Let me check that on my side."
+    },
+    {
+      "seq": 122,
+      "role": "customer",
+      "ts": "2026-03-02T10:35:20Z",
+      "text": "I tried that, same error."
+    },
+    {
+      "seq": 123,
+      "role": "agent",
+      "ts": "2026-03-02T10:36:00Z",
+      "text": "Can you try clearing the cache?"
+    },
+    {
+      "seq": 124,
+      "role": "system",
+      "ts": "2026-03-02T10:36:40Z",
+      "text": "Session checkpoint 5."
+    },
+    {
+      "seq": 125,
+      "role": "agent",
+      "ts": "2026-03-02T10:37:20Z",
+      "text": "What does the console show?"
+    },
+    {
+      "seq": 126,
+      "role": "customer",
+      "ts": "2026-03-02T10:38:00Z",
+      "text": "Now it's showing a different error."
+    },
+    {
+      "seq": 127,
+      "role": "agent",
+      "ts": "2026-03-02T10:38:40Z",
+      "text": "Please restart the client and retry."
+    },
+    {
+      "seq": 128,
+      "role": "customer",
+      "ts": "2026-03-02T10:39:20Z",
+      "text": "This is taking a very long time."
+    },
+    {
+      "seq": 129,
+      "role": "agent",
+      "ts": "2026-03-02T10:40:00Z",
+      "text": "I'm checking the server logs now."
+    },
+    {
+      "seq": 130,
+      "role": "customer",
+      "ts": "2026-03-02T10:40:40Z",
+      "text": "OK that step worked."
+    },
+    {
+      "seq": 131,
+      "role": "agent",
+      "ts": "2026-03-02T10:41:20Z",
+      "text": "That narrows it down, thanks."
+    },
+    {
+      "seq": 132,
+      "role": "customer",
+      "ts": "2026-03-02T10:42:00Z",
+      "text": "Back to the previous error now."
+    },
+    {
+      "seq": 133,
+      "role": "agent",
+      "ts": "2026-03-02T10:42:40Z",
+      "text": "Can you confirm the version number?"
+    },
+    {
+      "seq": 134,
+      "role": "customer",
+      "ts": "2026-03-02T10:43:20Z",
+      "text": "I've cleared the cache as asked."
+    },
+    {
+      "seq": 135,
+      "role": "agent",
+      "ts": "2026-03-02T10:44:00Z",
+      "text": "Trying a different configuration."
+    },
+    {
+      "seq": 136,
+      "role": "customer",
+      "ts": "2026-03-02T10:44:40Z",
+      "text": "Nothing in the console output."
+    },
+    {
+      "seq": 137,
+      "role": "agent",
+      "ts": "2026-03-02T10:45:20Z",
+      "text": "I've applied a change — retry now."
+    },
+    {
+      "seq": 138,
+      "role": "customer",
+      "ts": "2026-03-02T10:46:00Z",
+      "text": "Are we getting anywhere with this?"
+    },
+    {
+      "seq": 139,
+      "role": "agent",
+      "ts": "2026-03-02T10:46:40Z",
+      "text": "Bear with me while I escalate this."
+    },
+    {
+      "seq": 140,
+      "role": "customer",
+      "ts": "2026-03-02T10:47:20Z",
+      "text": "It's still not working."
+    },
+    {
+      "seq": 141,
+      "role": "agent",
+      "ts": "2026-03-02T10:48:00Z",
+      "text": "Let me check that on my side."
+    },
+    {
+      "seq": 142,
+      "role": "customer",
+      "ts": "2026-03-02T10:48:40Z",
+      "text": "I tried that, same error."
+    },
+    {
+      "seq": 143,
+      "role": "agent",
+      "ts": "2026-03-02T10:49:20Z",
+      "text": "Can you try clearing the cache?"
+    },
+    {
+      "seq": 144,
+      "role": "customer",
+      "ts": "2026-03-02T10:50:00Z",
+      "text": "Restarted, no change."
+    },
+    {
+      "seq": 145,
+      "role": "agent",
+      "ts": "2026-03-02T10:50:40Z",
+      "text": "What does the console show?"
+    },
+    {
+      "seq": 146,
+      "role": "customer",
+      "ts": "2026-03-02T10:51:20Z",
+      "text": "Now it's showing a different error."
+    },
+    {
+      "seq": 147,
+      "role": "agent",
+      "ts": "2026-03-02T10:52:00Z",
+      "text": "Please restart the client and retry."
+    },
+    {
+      "seq": 148,
+      "role": "customer",
+      "ts": "2026-03-02T10:52:40Z",
+      "text": "This is taking a very long time."
+    },
+    {
+      "seq": 149,
+      "role": "system",
+      "ts": "2026-03-02T10:53:20Z",
+      "text": "Session checkpoint 6."
+    },
+    {
+      "seq": 150,
+      "role": "customer",
+      "ts": "2026-03-02T10:54:00Z",
+      "text": "OK that step worked."
+    },
+    {
+      "seq": 151,
+      "role": "agent",
+      "ts": "2026-03-02T10:54:40Z",
+      "text": "That narrows it down, thanks."
+    },
+    {
+      "seq": 152,
+      "role": "customer",
+      "ts": "2026-03-02T10:55:20Z",
+      "text": "Back to the previous error now."
+    },
+    {
+      "seq": 153,
+      "role": "agent",
+      "ts": "2026-03-02T10:56:00Z",
+      "text": "Can you confirm the version number?"
+    },
+    {
+      "seq": 154,
+      "role": "customer",
+      "ts": "2026-03-02T10:56:40Z",
+      "text": "I've cleared the cache as asked."
+    },
+    {
+      "seq": 155,
+      "role": "agent",
+      "ts": "2026-03-02T10:57:20Z",
+      "text": "Trying a different configuration."
+    },
+    {
+      "seq": 156,
+      "role": "customer",
+      "ts": "2026-03-02T10:58:00Z",
+      "text": "Nothing in the console output."
+    },
+    {
+      "seq": 157,
+      "role": "agent",
+      "ts": "2026-03-02T10:58:40Z",
+      "text": "I've applied a change — retry now."
+    },
+    {
+      "seq": 158,
+      "role": "customer",
+      "ts": "2026-03-02T10:59:20Z",
+      "text": "Are we getting anywhere with this?"
+    },
+    {
+      "seq": 159,
+      "role": "agent",
+      "ts": "2026-03-02T11:00:00Z",
+      "text": "Bear with me while I escalate this."
+    },
+    {
+      "seq": 160,
+      "role": "customer",
+      "ts": "2026-03-02T11:00:40Z",
+      "text": "It's still not working."
+    },
+    {
+      "seq": 161,
+      "role": "agent",
+      "ts": "2026-03-02T11:01:20Z",
+      "text": "Let me check that on my side."
+    },
+    {
+      "seq": 162,
+      "role": "customer",
+      "ts": "2026-03-02T11:02:00Z",
+      "text": "I tried that, same error."
+    },
+    {
+      "seq": 163,
+      "role": "agent",
+      "ts": "2026-03-02T11:02:40Z",
+      "text": "Can you try clearing the cache?"
+    },
+    {
+      "seq": 164,
+      "role": "customer",
+      "ts": "2026-03-02T11:03:20Z",
+      "text": "Restarted, no change."
+    },
+    {
+      "seq": 165,
+      "role": "agent",
+      "ts": "2026-03-02T11:04:00Z",
+      "text": "What does the console show?"
+    },
+    {
+      "seq": 166,
+      "role": "customer",
+      "ts": "2026-03-02T11:04:40Z",
+      "text": "Now it's showing a different error."
+    },
+    {
+      "seq": 167,
+      "role": "agent",
+      "ts": "2026-03-02T11:05:20Z",
+      "text": "Please restart the client and retry."
+    },
+    {
+      "seq": 168,
+      "role": "customer",
+      "ts": "2026-03-02T11:06:00Z",
+      "text": "This is taking a very long time."
+    },
+    {
+      "seq": 169,
+      "role": "agent",
+      "ts": "2026-03-02T11:06:40Z",
+      "text": "I'm checking the server logs now."
+    },
+    {
+      "seq": 170,
+      "role": "customer",
+      "ts": "2026-03-02T11:07:20Z",
+      "text": "OK that step worked."
+    },
+    {
+      "seq": 171,
+      "role": "agent",
+      "ts": "2026-03-02T11:08:00Z",
+      "text": "That narrows it down, thanks."
+    },
+    {
+      "seq": 172,
+      "role": "customer",
+      "ts": "2026-03-02T11:08:40Z",
+      "text": "Back to the previous error now."
+    },
+    {
+      "seq": 173,
+      "role": "agent",
+      "ts": "2026-03-02T11:09:20Z",
+      "text": "Can you confirm the version number?"
+    },
+    {
+      "seq": 174,
+      "role": "system",
+      "ts": "2026-03-02T11:10:00Z",
+      "text": "Session checkpoint 7."
+    },
+    {
+      "seq": 175,
+      "role": "agent",
+      "ts": "2026-03-02T11:10:40Z",
+      "text": "Trying a different configuration."
+    },
+    {
+      "seq": 176,
+      "role": "customer",
+      "ts": "2026-03-02T11:11:20Z",
+      "text": "Nothing in the console output."
+    },
+    {
+      "seq": 177,
+      "role": "agent",
+      "ts": "2026-03-02T11:12:00Z",
+      "text": "I've applied a change — retry now."
+    },
+    {
+      "seq": 178,
+      "role": "customer",
+      "ts": "2026-03-02T11:12:40Z",
+      "text": "Are we getting anywhere with this?"
+    },
+    {
+      "seq": 179,
+      "role": "agent",
+      "ts": "2026-03-02T11:13:20Z",
+      "text": "Bear with me while I escalate this."
+    },
+    {
+      "seq": 180,
+      "role": "customer",
+      "ts": "2026-03-02T11:14:00Z",
+      "text": "It's still not working."
+    },
+    {
+      "seq": 181,
+      "role": "agent",
+      "ts": "2026-03-02T11:14:40Z",
+      "text": "Let me check that on my side."
+    },
+    {
+      "seq": 182,
+      "role": "customer",
+      "ts": "2026-03-02T11:15:20Z",
+      "text": "I tried that, same error."
+    },
+    {
+      "seq": 183,
+      "role": "agent",
+      "ts": "2026-03-02T11:16:00Z",
+      "text": "Can you try clearing the cache?"
+    },
+    {
+      "seq": 184,
+      "role": "customer",
+      "ts": "2026-03-02T11:16:40Z",
+      "text": "Restarted, no change."
+    },
+    {
+      "seq": 185,
+      "role": "agent",
+      "ts": "2026-03-02T11:17:20Z",
+      "text": "What does the console show?"
+    },
+    {
+      "seq": 186,
+      "role": "customer",
+      "ts": "2026-03-02T11:18:00Z",
+      "text": "Now it's showing a different error."
+    },
+    {
+      "seq": 187,
+      "role": "agent",
+      "ts": "2026-03-02T11:18:40Z",
+      "text": "Please restart the client and retry."
+    },
+    {
+      "seq": 188,
+      "role": "customer",
+      "ts": "2026-03-02T11:19:20Z",
+      "text": "This is taking a very long time."
+    },
+    {
+      "seq": 189,
+      "role": "agent",
+      "ts": "2026-03-02T11:20:00Z",
+      "text": "I'm checking the server logs now."
+    },
+    {
+      "seq": 190,
+      "role": "customer",
+      "ts": "2026-03-02T11:20:40Z",
+      "text": "OK that step worked."
+    },
+    {
+      "seq": 191,
+      "role": "agent",
+      "ts": "2026-03-02T11:21:20Z",
+      "text": "That narrows it down, thanks."
+    },
+    {
+      "seq": 192,
+      "role": "customer",
+      "ts": "2026-03-02T11:22:00Z",
+      "text": "Back to the previous error now."
+    },
+    {
+      "seq": 193,
+      "role": "agent",
+      "ts": "2026-03-02T11:22:40Z",
+      "text": "Can you confirm the version number?"
+    },
+    {
+      "seq": 194,
+      "role": "customer",
+      "ts": "2026-03-02T11:23:20Z",
+      "text": "I've cleared the cache as asked."
+    },
+    {
+      "seq": 195,
+      "role": "agent",
+      "ts": "2026-03-02T11:24:00Z",
+      "text": "Trying a different configuration."
+    },
+    {
+      "seq": 196,
+      "role": "customer",
+      "ts": "2026-03-02T11:24:40Z",
+      "text": "Nothing in the console output."
+    },
+    {
+      "seq": 197,
+      "role": "agent",
+      "ts": "2026-03-02T11:25:20Z",
+      "text": "I've applied a change — retry now."
+    },
+    {
+      "seq": 198,
+      "role": "customer",
+      "ts": "2026-03-02T11:26:00Z",
+      "text": "Are we getting anywhere with this?"
+    },
+    {
+      "seq": 199,
+      "role": "system",
+      "ts": "2026-03-02T11:26:40Z",
+      "text": "Session checkpoint 8."
+    }
+  ]
+}

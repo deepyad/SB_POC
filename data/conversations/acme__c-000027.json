@@ -1,0 +1,26 @@
+{
+  "conversation_id": "c-000027",
+  "tenant_id": "acme",
+  "channel": "email",
+  "started_at": "2026-03-02T09:14:00Z",
+  "turns": [
+    {
+      "seq": 0,
+      "role": "customer",
+      "ts": "2026-03-02T09:14:00Z",
+      "text": "I am going to lay out the entire history of this issue because every time I contact support I get asked to start again from the beginning and I would rather write it once. The first order was placed at the start of the month and arrived with the wrong item inside, a cable instead of the adapter, and the packing slip listed the adapter so the error happened at the warehouse rather than at checkout. I reported it the same day and was told to keep the cable and that a replacement adapter would ship within two working days. Nothing shipped. I chased on the fourth day and was told the replacement was blocked because the original had not been marked as returned, which contradicted the instruction to keep the cable. The second agent cancelled the first replacement and raised a new one, which generated a refund notification I did not ask for and which I assume means the replacement was converted into a refund somewhere in your system. A week later I had neither the adapter nor the refund, so I called and was told the refund was pending on the warehouse confirming receipt of an item I had been told to keep. At this point I asked for the whole order to be cancelled and refunded and was told that was not possible because a replacement was already in flight, which is the opposite of what the previous agent said. I have now spoken to four people, each of whom has given me a different account of what state my order is in, and I have a cable I did not order, no adapter, and no refund. What I want is very simple and I will restate it clearly so it cannot be misread again. I want confirmation in writing of what is actually in flight right now, either a replacement or a refund but not both, I want a date, and I want to not be asked to explain this a fifth time. If the honest answer is that the adapter is out of stock and nobody wants to say so, tell me that and refund me, because I can buy one locally today. What I cannot keep doing is spending twenty minutes per contact re-establishing facts that are already in the ticket history, which I assume your agents can see, because otherwise I do not understand what the ticket history is for. I would also like to know why the packing slip was correct but the box was not, since that suggests the picking process has no verification step, and if that is the case then this will happen to other customers and my individual refund does not fix it. I have been a customer for several years and this is the first time anything has gone wrong, so I am not writing this to be difficult, I am writing it because the recovery process has been considerably worse than the original mistake and somebody should probably know that. Please just tell me the true state of the order and a date, and I will stop writing very long messages. For completeness, here are the reference numbers I have been given so far, none of which appear to relate to each other: the original order acknowledgement, the first replacement authorisation, the cancellation of that authorisation, the second replacement, and the unexplained refund notification. Each one arrived from a different sender address and only two of them mention the item at all, so if your systems are joining these records on something other than the order, that would explain why every agent sees a different picture. I mention it only because it seems like the sort of thing that would be useful for somebody there to know, and because I would rather this ended with the process being fixed than with me being given a goodwill voucher I have no use for. To summarise, so that nothing here needs re-reading: wrong item received, told to keep it, replacement promised, replacement blocked by a return that was never expected, replacement cancelled, refund raised without being requested, refund blocked by the same phantom return, and no resolution after three weeks. One reply, with the true current state and a date, closes this out."
+    },
+    {
+      "seq": 1,
+      "role": "agent",
+      "ts": "2026-03-02T09:14:40Z",
+      "text": "Thank you for the detail — let me establish the actual state of the order and come back with a date."
+    },
+    {
+      "seq": 2,
+      "role": "customer",
+      "ts": "2026-03-02T09:15:20Z",
+      "text": "Thank you, that's all I asked for."
+    }
+  ]
+}

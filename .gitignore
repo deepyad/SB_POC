@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Virtualenvs
+.venv/
+venv/
+env/
+
+# Test / lint / type caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Local config (never commit secrets — brief §9)
+.env
+
+# Model weights / caches — must never be committed (brief §9)
+.hf_cache/
+hf_cache/
+models/
+*.safetensors
+*.bin
+
+# OS
+.DS_Store

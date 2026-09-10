@@ -1,0 +1,38 @@
+{
+  "conversation_id": "c-000024",
+  "tenant_id": "globex",
+  "channel": "email",
+  "started_at": "2026-03-02T09:14:00Z",
+  "turns": [
+    {
+      "seq": 0,
+      "role": "customer",
+      "ts": "2026-03-02T09:14:00Z",
+      "text": "Bonjour, ma commande n'est jamais arrivée et personne ne me répond."
+    },
+    {
+      "seq": 1,
+      "role": "agent",
+      "ts": "2026-03-02T09:14:40Z",
+      "text": "Je suis désolé pour ce retard. Je vérifie le suivi tout de suite."
+    },
+    {
+      "seq": 2,
+      "role": "customer",
+      "ts": "2026-03-02T09:15:20Z",
+      "text": "C'est inadmissible, j'attends depuis trois semaines."
+    },
+    {
+      "seq": 3,
+      "role": "agent",
+      "ts": "2026-03-02T09:16:00Z",
+      "text": "Je comprends votre frustration. Je vous envoie un remplacement aujourd'hui."
+    },
+    {
+      "seq": 4,
+      "role": "customer",
+      "ts": "2026-03-02T09:16:40Z",
+      "text": "Merci beaucoup, c'est très gentil de votre part."
+    }
+  ]
+}

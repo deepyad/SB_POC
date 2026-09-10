@@ -1,0 +1,50 @@
+{
+  "conversation_id": "c-000008",
+  "tenant_id": "globex",
+  "channel": "ticketing",
+  "started_at": "2026-03-02T09:14:00Z",
+  "turns": [
+    {
+      "seq": 0,
+      "role": "system",
+      "ts": "2026-03-02T09:14:00Z",
+      "text": "Ticket created via web form."
+    },
+    {
+      "seq": 1,
+      "role": "customer",
+      "ts": "2026-03-02T09:14:40Z",
+      "text": "Password reset link expired before I could use it."
+    },
+    {
+      "seq": 2,
+      "role": "agent",
+      "ts": "2026-03-02T09:15:20Z",
+      "text": "I can send a fresh one. Links are valid for 15 minutes."
+    },
+    {
+      "seq": 3,
+      "role": "agent",
+      "ts": "2026-03-02T09:16:00Z",
+      "text": "Sent to the address on file."
+    },
+    {
+      "seq": 4,
+      "role": "agent",
+      "ts": "2026-03-02T09:16:40Z",
+      "text": "Let me know if it doesn't arrive within a few minutes."
+    },
+    {
+      "seq": 5,
+      "role": "customer",
+      "ts": "2026-03-02T09:17:20Z",
+      "text": "Got it, worked fine. Thanks."
+    },
+    {
+      "seq": 6,
+      "role": "system",
+      "ts": "2026-03-02T09:18:00Z",
+      "text": "Ticket resolved."
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "conversation_id": "c-000017",
+  "tenant_id": "acme",
+  "channel": "ticketing",
+  "started_at": "2026-03-02T09:14:00Z",
+  "turns": [
+    {
+      "seq": 0,
+      "role": "system",
+      "ts": "2026-03-02T09:14:00Z",
+      "text": "Ticket auto-created by monitoring: failed webhook delivery."
+    },
+    {
+      "seq": 1,
+      "role": "agent",
+      "ts": "2026-03-02T09:14:40Z",
+      "text": "Investigated — receiving endpoint returned 503 for 20 minutes."
+    },
+    {
+      "seq": 2,
+      "role": "agent",
+      "ts": "2026-03-02T09:15:20Z",
+      "text": "Deliveries retried successfully. Closing."
+    },
+    {
+      "seq": 3,
+      "role": "system",
+      "ts": "2026-03-02T09:16:00Z",
+      "text": "Ticket closed without customer contact."
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "conversation_id": "c-000007",
+  "tenant_id": "acme",
+  "channel": "chat",
+  "started_at": "2026-03-02T09:14:00Z",
+  "turns": [
+    {
+      "seq": 0,
+      "role": "customer",
+      "ts": "2026-03-02T09:14:00Z",
+      "text": "Loving the new integration so far, setup was painless."
+    },
+    {
+      "seq": 1,
+      "role": "agent",
+      "ts": "2026-03-02T09:14:40Z",
+      "text": "Great to hear!"
+    },
+    {
+      "seq": 2,
+      "role": "customer",
+      "ts": "2026-03-02T09:15:20Z",
+      "text": "Hmm, though the sync seems to be dropping records."
+    },
+    {
+      "seq": 3,
+      "role": "agent",
+      "ts": "2026-03-02T09:16:00Z",
+      "text": "How many are you seeing missing?"
+    },
+    {
+      "seq": 4,
+      "role": "customer",
+      "ts": "2026-03-02T09:16:40Z",
+      "text": "About a fifth of them. That's a lot worse than I first thought."
+    },
+    {
+      "seq": 5,
+      "role": "customer",
+      "ts": "2026-03-02T09:17:20Z",
+      "text": "I can't put this live if it silently loses data."
+    }
+  ]
+}

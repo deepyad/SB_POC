@@ -1,0 +1,38 @@
+{
+  "conversation_id": "c-000021",
+  "tenant_id": "acme",
+  "channel": "chat",
+  "started_at": "2026-03-02T09:14:00Z",
+  "turns": [
+    {
+      "seq": 0,
+      "role": "customer",
+      "ts": "2026-03-02T09:14:00Z",
+      "text": "First message about a damaged item."
+    },
+    {
+      "seq": 3,
+      "role": "agent",
+      "ts": "2026-03-02T09:14:40Z",
+      "text": "Sorry to hear that — can you share a photo?"
+    },
+    {
+      "seq": 1,
+      "role": "customer",
+      "ts": "2026-03-02T09:15:20Z",
+      "text": "Photo attached. The corner is crushed."
+    },
+    {
+      "seq": 2,
+      "role": "agent",
+      "ts": "2026-03-02T09:16:00Z",
+      "text": "Thanks, I'll arrange a replacement."
+    },
+    {
+      "seq": 2,
+      "role": "customer",
+      "ts": "2026-03-02T09:16:40Z",
+      "text": "Great, thank you."
+    }
+  ]
+}

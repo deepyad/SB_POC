@@ -1,0 +1,50 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "sb-sentiment-pipeline"
+version = "0.1.0"
+description = "Scorebuddy technical challenge — conversation sentiment scoring pipeline"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+    "pydantic==2.10.6",
+]
+
+# Optional groups are installed layer by layer (see Implementation_Details.md):
+#   Layer 0-1  ->  pip install -e ".[dev]"
+#   Layer 2,4  ->  pip install -e ".[dev,model]"
+#   Layer 5+   ->  pip install -e ".[dev,model,db]"
+[project.optional-dependencies]
+model = [
+    "transformers==4.48.0",
+    "torch==2.6.0",
+]
+db = [
+    "psycopg[binary,pool]==3.2.4",
+    "testcontainers[postgres]==4.9.1",
+]
+dev = [
+    "pytest==8.3.4",
+    "ruff==0.9.6",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pipeline"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-q"
+markers = [
+    "slow: needs the sentiment model downloaded (Layer 2+)",
+    "db: needs Docker for a throwaway Postgres (Layer 5+)",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]

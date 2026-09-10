@@ -1,0 +1,56 @@
+{
+  "conversation_id": "c-000001",
+  "tenant_id": "acme",
+  "channel": "chat",
+  "started_at": "2026-03-02T09:14:00Z",
+  "turns": [
+    {
+      "seq": 0,
+      "role": "customer",
+      "ts": "2026-03-02T09:14:00Z",
+      "text": "Hi, my order was supposed to arrive on Tuesday and it hasn't turned up."
+    },
+    {
+      "seq": 1,
+      "role": "agent",
+      "ts": "2026-03-02T09:14:40Z",
+      "text": "Thanks for flagging that. Let me pull up the tracking for you."
+    },
+    {
+      "seq": 2,
+      "role": "customer",
+      "ts": "2026-03-02T09:15:20Z",
+      "text": "It just says label created. That's the same as it said four days ago."
+    },
+    {
+      "seq": 3,
+      "role": "agent",
+      "ts": "2026-03-02T09:16:00Z",
+      "text": "You're right, the carrier hasn't scanned it. I can raise a lost parcel case."
+    },
+    {
+      "seq": 4,
+      "role": "customer",
+      "ts": "2026-03-02T09:16:40Z",
+      "text": "A case? I've already waited a week. I needed this for the weekend."
+    },
+    {
+      "seq": 5,
+      "role": "agent",
+      "ts": "2026-03-02T09:17:20Z",
+      "text": "I understand. The case takes 48 hours before I can issue a replacement."
+    },
+    {
+      "seq": 6,
+      "role": "customer",
+      "ts": "2026-03-02T09:18:00Z",
+      "text": "This is genuinely useless. Nobody can tell me where my parcel is and now I'm being told to wait again."
+    },
+    {
+      "seq": 7,
+      "role": "customer",
+      "ts": "2026-03-02T09:18:40Z",
+      "text": "Cancel the whole thing. I'll buy it elsewhere."
+    }
+  ]
+}

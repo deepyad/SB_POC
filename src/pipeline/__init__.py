@@ -9,6 +9,25 @@ Build order:      ../Implementation_Details.md
 """
 
 from pipeline.config import SCHEMA_VERSION, Config
+from pipeline.hashing import content_hash
+from pipeline.schema import (
+    DroppedTurn,
+    ParsedConversation,
+    ParsedTurn,
+    Rejection,
+    customer_turns,
+    parse_conversation,
+)
 
-__all__ = ["Config", "SCHEMA_VERSION"]
-__version__ = "0.1.0"
+__all__ = [
+    "SCHEMA_VERSION",
+    "Config",
+    "content_hash",
+    "parse_conversation",
+    "customer_turns",
+    "ParsedConversation",
+    "ParsedTurn",
+    "DroppedTurn",
+    "Rejection",
+]
+__version__ = "0.2.0"

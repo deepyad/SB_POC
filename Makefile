@@ -8,8 +8,17 @@ PY ?= python3
 install:            ## editable install with dev tools (add ,model / ,db in later layers)
 	$(PY) -m pip install -e ".[dev]"
 
-test:              ## run the test suite
+test:              ## fast tests only — no model download needed
+	$(PY) -m pytest -m "not slow"
+
+test-slow:         ## tests needing the sentiment model (downloads ~500MB on first run)
+	$(PY) -m pytest -m slow
+
+test-all:          ## everything
 	$(PY) -m pytest
+
+warm-model:        ## download + cache the pinned model revision
+	$(PY) -m pipeline.warm_model
 
 lint:              ## static checks
 	$(PY) -m ruff check .

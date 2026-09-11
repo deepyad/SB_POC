@@ -11,13 +11,13 @@ result per conversation.
 
 ## Status
 
-Built layer by layer. Current: **Layer 1 — input validation & canonical hashing.**
+Built layer by layer. Current: **Layer 2 — sentiment model wrapper.**
 
 | Layer | State |
 | --- | --- |
 | 0 Scaffold & config | ✅ |
 | 1 Input schema & hashing | ✅ |
-| 2 Sentiment model wrapper | ⬜ |
+| 2 Sentiment model wrapper | ✅ |
 | 3 The two metrics | ⬜ |
 | 4 Result assembly | ⬜ |
 | 5 Storage (Postgres) | ⬜ |
@@ -35,8 +35,16 @@ Requires Python 3.11+ (macOS: `brew install python@3.11`).
 make install      # pip install -e ".[dev]" — editable install, so `import
                   # pipeline` works from anywhere: pytest, a plain script, or
                   # a debugger, with no PYTHONPATH juggling.
-make test
+make test         # fast tests, no model download
 make lint
+```
+
+Layer 2 (the sentiment model) needs the `model` extra and a one-time download:
+
+```bash
+pip install -e ".[dev,model]"
+make warm-model    # downloads the pinned model, ~479 MB, ~30-60s first time
+make test-slow     # or `make test-all` to run everything
 ```
 
 `.vscode/settings.json` points the Python extension at `.venv` and turns on

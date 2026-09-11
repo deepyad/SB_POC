@@ -32,8 +32,9 @@ class Config:
 
     # --- model (ADR-007) -------------------------------------------------------
     model_name: str = "cardiffnlp/twitter-roberta-base-sentiment-latest"
-    # Pinned to an exact commit hash in Layer 2; "main" is a placeholder only.
-    model_revision: str = "main"
+    # Pinned commit (Layer 2) — id2label = {0: negative, 1: neutral, 2: positive}.
+    # "the model" cannot silently change under us (ADR-007, ADR-013 provenance).
+    model_revision: str = "3216a57f2a0d9c45a2e6c20157c20c49fb4bf9c7"
     max_tokens: int = 512
     batch_size: int = 32  # tuned from scripts/bench.py in Layer 9
 

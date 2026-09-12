@@ -11,14 +11,14 @@ result per conversation.
 
 ## Status
 
-Built layer by layer. Current: **Layer 2 — sentiment model wrapper.**
+Built layer by layer. Current: **Layer 3 — the two metrics.**
 
 | Layer | State |
 | --- | --- |
 | 0 Scaffold & config | ✅ |
 | 1 Input schema & hashing | ✅ |
 | 2 Sentiment model wrapper | ✅ |
-| 3 The two metrics | ⬜ |
+| 3 The two metrics | ✅ |
 | 4 Result assembly | ⬜ |
 | 5 Storage (Postgres) | ⬜ |
 | 6 Queue + ingest | ⬜ |

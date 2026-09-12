@@ -11,7 +11,7 @@ result per conversation.
 
 ## Status
 
-Built layer by layer. Current: **Layer 3 — the two metrics.**
+Built layer by layer. Current: **Layer 4 — result assembly.**
 
 | Layer | State |
 | --- | --- |
@@ -19,7 +19,7 @@ Built layer by layer. Current: **Layer 3 — the two metrics.**
 | 1 Input schema & hashing | ✅ |
 | 2 Sentiment model wrapper | ✅ |
 | 3 The two metrics | ✅ |
-| 4 Result assembly | ⬜ |
+| 4 Result assembly | ✅ |
 | 5 Storage (Postgres) | ⬜ |
 | 6 Queue + ingest | ⬜ |
 | 7 Worker loop | ⬜ |
@@ -45,6 +45,13 @@ Layer 2 (the sentiment model) needs the `model` extra and a one-time download:
 pip install -e ".[dev,model]"
 make warm-model    # downloads the pinned model, ~479 MB, ~30-60s first time
 make test-slow     # or `make test-all` to run everything
+```
+
+Layer 4 wires validation + scoring + the two metrics into one row — no database
+involved, just a dict in, a dict out:
+
+```bash
+python -m pipeline score-file data/conversations/acme__c-000001.json
 ```
 
 `.vscode/settings.json` points the Python extension at `.venv` and turns on

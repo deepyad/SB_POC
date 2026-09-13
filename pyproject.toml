@@ -7,9 +7,10 @@ name = "sb-sentiment-pipeline"
 version = "0.1.0"
 description = "Scorebuddy technical challenge — conversation sentiment scoring pipeline"
 requires-python = ">=3.11,<3.13"
-dependencies = [
-    "pydantic==2.10.6",
-]
+dependencies = []
+# No pydantic: Layer 1's "keep the good turns, flag the bad" validation is
+# bespoke logic that pydantic's strict-by-default validation fights, so it's
+# plain frozen dataclasses instead (see schema.py). Nothing else needs it.
 
 # Optional groups are installed layer by layer (see Implementation_Details.md):
 #   Layer 0-1  ->  pip install -e ".[dev]"
@@ -22,11 +23,13 @@ model = [
 ]
 db = [
     "psycopg[binary,pool]==3.2.4",
-    "testcontainers[postgres]==4.9.1",
 ]
 dev = [
     "pytest==8.3.4",
     "ruff==0.9.6",
+    # test-only — never imported by src/, kept out of the Docker image's `db`
+    # extra so the runtime worker doesn't ship a container-management SDK.
+    "testcontainers[postgres]==4.9.1",
 ]
 
 [tool.hatch.build.targets.wheel]

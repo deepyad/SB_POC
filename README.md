@@ -50,7 +50,8 @@ dev credential for a container with no external network exposure.
 
 ## Status
 
-Built layer by layer. Current: **Layer 8 — packaging (clean clone).**
+Built layer by layer. **All 10 layers complete — see `NOTES.md` for the
+assessed write-up.**
 
 | Layer | State |
 | --- | --- |
@@ -63,7 +64,7 @@ Built layer by layer. Current: **Layer 8 — packaging (clean clone).**
 | 6 Queue + ingest | ✅ |
 | 7 Worker loop | ✅ (core complete) |
 | 8 Packaging / clean clone | ✅ |
-| 9 Throughput + NOTES.md | ⬜ |
+| 9 Throughput + NOTES.md | ✅ |
 
 ## Develop locally (without Docker for the app itself)
 

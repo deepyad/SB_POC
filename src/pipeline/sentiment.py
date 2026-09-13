@@ -97,8 +97,13 @@ class Scorer:
             if required not in self._idx_by_label:
                 raise ValueError(f"{cfg.model_name}@{cfg.model_revision} has no {required!r} class")
 
-    def score_texts(self, texts: list[str]) -> list[TurnScore]:
-        """Score each string; empty/whitespace/punctuation-only ones are skipped."""
+    def score_texts(self, texts: list[str], batch_size: int | None = None) -> list[TurnScore]:
+        """Score each string; empty/whitespace/punctuation-only ones are skipped.
+
+        `batch_size` overrides `cfg.batch_size` for this call only — used by
+        `scripts/bench.py` to compare batch sizes without reloading the model
+        (`Config` is frozen, so it can't just be mutated between calls).
+        """
         results: list[TurnScore | None] = [None] * len(texts)
         to_score_idx: list[int] = []
         to_score_text: list[str] = []
@@ -111,7 +116,7 @@ class Scorer:
                     scored=False, label=None, signed=None, confidence=None, reason="empty_text"
                 )
 
-        batch_size = self._cfg.batch_size
+        batch_size = batch_size or self._cfg.batch_size
         for start in range(0, len(to_score_text), batch_size):
             idx_chunk = to_score_idx[start : start + batch_size]
             text_chunk = to_score_text[start : start + batch_size]

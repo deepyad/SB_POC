@@ -3,7 +3,8 @@
 
 PY ?= python3
 
-.PHONY: install test lint fmt smoke clean up down db-reset migrate db-shell run run-once results results-summary
+.PHONY: install test lint fmt smoke clean up down db-reset migrate db-shell run run-once results results-summary \
+        docker-build docker-up docker-down seed docker-run-once docker-results verify smoke-test
 
 install:            ## editable install with dev tools (add ,model / ,db in later layers)
 	$(PY) -m pip install -e ".[dev]"
@@ -65,3 +66,31 @@ smoke:             ## import the package without installing
 
 clean:
 	rm -rf .pytest_cache .ruff_cache **/__pycache__ *.egg-info
+
+# --- Layer 8: the clean-clone path — Docker only, nothing else installed ------
+
+docker-build:      ## build the worker image (bakes the model in, ~2-4 min first run)
+	docker compose build
+
+docker-up:         ## full stack in the background: postgres + a worker loop
+	docker compose up -d
+
+docker-down:       ## stop the full stack, keep the data volume
+	docker compose down
+
+seed:              ## ingest the sample dataset via a one-shot container
+	docker compose run --rm worker ingest data/conversations
+
+docker-run-once:   ## drain the queue once, via a one-shot container
+	docker compose run --rm worker run --once
+
+docker-results:    ## results summary, via a one-shot container
+	docker compose run --rm worker results --summary
+
+verify:            ## prove two separate containers agree except scored_at
+	docker compose run --rm worker score-file data/conversations/acme__c-000001.json > /tmp/sb_verify_1.json
+	docker compose run --rm worker score-file data/conversations/acme__c-000001.json > /tmp/sb_verify_2.json
+	$(PY) scripts/verify_reproducibility.py /tmp/sb_verify_1.json /tmp/sb_verify_2.json
+
+smoke-test:        ## the entire clean-clone sequence, end to end
+	bash scripts/smoke.sh

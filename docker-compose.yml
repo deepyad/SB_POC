@@ -15,5 +15,21 @@ services:
       timeout: 3s
       retries: 20
 
+  # The worker (Layer 8). Nothing external at runtime — the model was baked
+  # into the image at build time (Dockerfile, ADR-007). Scale it with
+  # `docker compose up -d --scale worker=2` to show the queue boundary
+  # (ADR-002): each replica claims disjoint work from the same `jobs` table.
+  worker:
+    build: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SB_DATABASE_URL: postgresql://sb:sb@postgres:5432/sb
+    restart: unless-stopped
+    # Default CMD (see Dockerfile) is `run` — the long-running claim loop.
+    # One-shot commands (ingest, run --once, results, migrate) go through
+    # `docker compose run --rm worker <command>`, which overrides this.
+
 volumes:
   sb_pgdata:

@@ -9,9 +9,48 @@ result per conversation.
 - Build order: `../Implementation_Details.md`
 - Assessed write-up: `NOTES.md`
 
+## Quickstart — clean clone, Docker only
+
+Requires **Docker** (with Compose v2) and nothing else. First `docker build`
+downloads the model — see below — everything after that is fully offline.
+
+```bash
+docker compose build       # ~2-4 min first time: downloads a CPU PyTorch
+                            # wheel (~190 MB) and the pinned sentiment model
+                            # (~479 MB). Nothing is fetched at runtime.
+docker compose up -d postgres
+docker compose run --rm worker migrate
+docker compose run --rm worker ingest data/conversations
+docker compose run --rm worker run --once
+docker compose run --rm worker results --summary
+```
+
+Or the whole thing in one go: `bash scripts/smoke.sh`.
+
+Expect, on the shipped sample data:
+```
+files_seen=28 enqueued=27 already_tracked=1 parse_errors=0
+processed=27
+scored: 21
+partial: 1
+rejected: 5
+```
+
+Scale it to show the queue boundary claim — two independent containers
+claiming disjoint work from the same `jobs` table (ADR-002):
+```bash
+docker compose up -d --scale worker=2
+```
+
+Safe to run unattended: no `sudo`, nothing written outside the project, no
+port opened beyond Postgres's `5432` (drop the `ports:` mapping in
+`docker-compose.yml` if even that shouldn't be exposed), no TLS disabled, no
+committed secrets — `sb`/`sb` in `docker-compose.yml` is a disposable local
+dev credential for a container with no external network exposure.
+
 ## Status
 
-Built layer by layer. Current: **Layer 7 — worker loop (core complete).**
+Built layer by layer. Current: **Layer 8 — packaging (clean clone).**
 
 | Layer | State |
 | --- | --- |
@@ -22,67 +61,44 @@ Built layer by layer. Current: **Layer 7 — worker loop (core complete).**
 | 4 Result assembly | ✅ |
 | 5 Storage (Postgres) | ✅ |
 | 6 Queue + ingest | ✅ |
-| 7 Worker loop | ✅ |
-| 8 Packaging / clean clone | ⬜ |
+| 7 Worker loop | ✅ (core complete) |
+| 8 Packaging / clean clone | ✅ |
 | 9 Throughput + NOTES.md | ⬜ |
 
-## Develop (Layers 1–4, pure Python)
+## Develop locally (without Docker for the app itself)
 
-Requires Python 3.11+ (macOS: `brew install python@3.11`).
+Requires Python 3.11+ (macOS: `brew install python@3.11`). Postgres still
+needs Docker (`make up`); the app runs in a local venv against it.
 
 ```bash
 /opt/homebrew/bin/python3.11 -m venv .venv && source .venv/bin/activate
 make install      # pip install -e ".[dev]" — editable install, so `import
                   # pipeline` works from anywhere: pytest, a plain script, or
                   # a debugger, with no PYTHONPATH juggling.
-make test         # fast tests, no model download
+make test         # fast tests, no model, no Docker
 make lint
 ```
 
-Layer 2 (the sentiment model) needs the `model` extra and a one-time download:
+Add extras as you go deeper:
 
 ```bash
-pip install -e ".[dev,model]"
-make warm-model    # downloads the pinned model, ~479 MB, ~30-60s first time
-make test-slow     # or `make test-all` to run everything
+pip install -e ".[dev,model]"    # Layer 2+: the sentiment model
+make warm-model                  # downloads the pinned model, ~479 MB, ~30-60s
+make test-slow                   # or `make test-all` for everything
+
+pip install -e ".[dev,model,db]" # Layer 5+: Postgres
+make up && make migrate          # docker compose up -d postgres; apply schema
+make test-db                     # storage/queue tests, own throwaway Postgres
 ```
 
-Layer 4 wires validation + scoring + the two metrics into one row — no database
-involved, just a dict in, a dict out:
+Local, one-command equivalents of the Docker path (same behaviour, runs
+against the venv instead of a container):
 
 ```bash
-python -m pipeline score-file data/conversations/acme__c-000001.json
+python -m pipeline score-file data/conversations/acme__c-000001.json  # Layer 4
+make ingest DIR=data/conversations                                     # Layer 6
+make run-once && make results-summary                                  # Layer 7
 ```
-
-Layer 5 needs Docker and the `db` extra:
-
-```bash
-pip install -e ".[dev,db]"
-make up          # docker compose up -d postgres
-make migrate     # applies migrations/*.sql, idempotent
-make test-db     # storage/queue tests via testcontainers (own throwaway
-                 # Postgres, independent of `make up`)
-```
-
-Layer 6 loads a directory of conversations into the queue, de-duplicated:
-
-```bash
-make ingest DIR=data/conversations
-# files_seen=28 enqueued=27 already_tracked=1 parse_errors=0
-```
-
-**Layer 7 is core-complete: a full scored run.** With the model installed
-(`pip install -e ".[dev,model,db]"`, `make warm-model`) and Postgres up:
-
-```bash
-docker compose down -v && make up && make migrate && make ingest
-make run-once          # drains the queue: processed=27
-make results-summary   # scored: 21, partial: 1, rejected: 5
-make results           # full JSON, one row per line
-```
-
-Re-running `make run-once` afterwards is a no-op (`processed=0`) — nothing is
-left queued, and re-ingesting unchanged files never resets a finished job.
 
 `.vscode/settings.json` points the Python extension at `.venv` and turns on
 pytest as the test runner, so the Testing sidebar (flask icon) discovers and
@@ -91,5 +107,15 @@ a test file instead runs it as a bare script and will fail with
 `ModuleNotFoundError: No module named 'pipeline'` — use the Testing sidebar, or
 `make test`, or `pytest --trace` from a terminal.
 
-The full run instructions (Docker, one command to a scored result) land in
-Layer 8.
+## Makefile reference
+
+| Target | What |
+| --- | --- |
+| `install`, `test`, `test-slow`, `test-db`, `test-all`, `lint`, `fmt` | local dev loop |
+| `warm-model` | cache the pinned model locally (no Docker) |
+| `up`, `down`, `db-reset`, `migrate`, `db-shell` | Postgres via Docker, app via venv |
+| `ingest`, `run`, `run-once`, `results`, `results-summary` | the pipeline, via venv |
+| `docker-build`, `docker-up`, `docker-down` | the full stack, in containers |
+| `seed`, `docker-run-once`, `docker-results` | one-shot container commands |
+| `verify` | two live containers score the same conversation; diff except `scored_at` |
+| `smoke-test` | `scripts/smoke.sh` — the entire clean-clone sequence |

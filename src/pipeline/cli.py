@@ -1,7 +1,10 @@
 """Command-line entry points: ``python -m pipeline <command>``.
 
 Layer 4 adds ``score-file``. Layer 6 adds ``ingest``. Layer 7 adds ``run``,
-``results``.
+``results``. Layer 8 adds ``migrate`` — ``pipeline.migrate`` already has its
+own ``__main__`` for local dev (``make migrate``); this is the same thing
+reachable through the single Docker entrypoint (``docker compose run --rm
+worker migrate``).
 """
 
 from __future__ import annotations
@@ -118,6 +121,15 @@ def _cmd_results(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_migrate(args: argparse.Namespace) -> int:
+    from pipeline.migrate import apply_migrations
+
+    cfg = Config.from_env()
+    applied = apply_migrations(cfg.database_url)
+    print(f"applied: {', '.join(applied)}" if applied else "already up to date")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="python -m pipeline")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -145,6 +157,9 @@ def build_parser() -> argparse.ArgumentParser:
         "--summary", action="store_true", help="print counts by status instead of full rows"
     )
     results.set_defaults(func=_cmd_results)
+
+    migrate = sub.add_parser("migrate", help="apply migrations/*.sql (idempotent)")
+    migrate.set_defaults(func=_cmd_migrate)
 
     return parser
 

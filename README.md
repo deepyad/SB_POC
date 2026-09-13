@@ -11,7 +11,7 @@ result per conversation.
 
 ## Status
 
-Built layer by layer. Current: **Layer 6 — queue + ingest.**
+Built layer by layer. Current: **Layer 7 — worker loop (core complete).**
 
 | Layer | State |
 | --- | --- |
@@ -22,7 +22,7 @@ Built layer by layer. Current: **Layer 6 — queue + ingest.**
 | 4 Result assembly | ✅ |
 | 5 Storage (Postgres) | ✅ |
 | 6 Queue + ingest | ✅ |
-| 7 Worker loop | ⬜ |
+| 7 Worker loop | ✅ |
 | 8 Packaging / clean clone | ⬜ |
 | 9 Throughput + NOTES.md | ⬜ |
 
@@ -70,6 +70,19 @@ Layer 6 loads a directory of conversations into the queue, de-duplicated:
 make ingest DIR=data/conversations
 # files_seen=28 enqueued=27 already_tracked=1 parse_errors=0
 ```
+
+**Layer 7 is core-complete: a full scored run.** With the model installed
+(`pip install -e ".[dev,model,db]"`, `make warm-model`) and Postgres up:
+
+```bash
+docker compose down -v && make up && make migrate && make ingest
+make run-once          # drains the queue: processed=27
+make results-summary   # scored: 21, partial: 1, rejected: 5
+make results           # full JSON, one row per line
+```
+
+Re-running `make run-once` afterwards is a no-op (`processed=0`) — nothing is
+left queued, and re-ingesting unchanged files never resets a finished job.
 
 `.vscode/settings.json` points the Python extension at `.venv` and turns on
 pytest as the test runner, so the Testing sidebar (flask icon) discovers and

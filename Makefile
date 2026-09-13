@@ -3,7 +3,7 @@
 
 PY ?= python3
 
-.PHONY: install test lint fmt smoke clean up down db-reset migrate db-shell
+.PHONY: install test lint fmt smoke clean up down db-reset migrate db-shell run run-once results results-summary
 
 install:            ## editable install with dev tools (add ,model / ,db in later layers)
 	$(PY) -m pip install -e ".[dev]"
@@ -41,6 +41,18 @@ db-shell:          ## open a psql shell in the running container
 DIR ?= data/conversations
 ingest:            ## load a directory of conversations into the queue (Layer 6+)
 	$(PY) -m pipeline ingest $(DIR)
+
+run:               ## run the worker loop (long-running; Ctrl+C to stop)
+	$(PY) -m pipeline run
+
+run-once:          ## drain whatever is currently queued, then exit (Layer 7)
+	$(PY) -m pipeline run --once
+
+results:           ## dump all results rows as JSON, one per line
+	$(PY) -m pipeline results
+
+results-summary:   ## count results by status
+	$(PY) -m pipeline results --summary
 
 lint:              ## static checks
 	$(PY) -m ruff check .

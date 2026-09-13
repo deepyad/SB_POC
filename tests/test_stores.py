@@ -121,6 +121,14 @@ def test_migrations_are_idempotent(pg_dsn, pool):
     assert apply_migrations(pg_dsn) == []
 
 
+def test_migrate_main_prints_up_to_date(pg_dsn, pool, monkeypatch, capsys):
+    from pipeline.migrate import main
+
+    monkeypatch.setenv("SB_DATABASE_URL", pg_dsn)
+    main()
+    assert "up to date" in capsys.readouterr().out
+
+
 # --- blobstore --------------------------------------------------------------
 
 

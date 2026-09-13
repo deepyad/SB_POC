@@ -1,6 +1,7 @@
 """Layer 1 — parse_conversation against the sample fixtures (brief §4)."""
 
 from pipeline.schema import (
+    DroppedTurn,
     ParsedConversation,
     Rejection,
     customer_turns,
@@ -117,3 +118,46 @@ def test_missing_identity_is_rejected():
         "missing_tenant_id"
     )
     assert parse_conversation("not a dict").reason == "not_an_object"
+
+
+# --- individual turn drop reasons not hit by the shipped fixtures -------------
+# c-000031 covers missing_ts / null_text / unknown_role together; these round
+# out the remaining reasons in schema._parse_turn with synthetic turns.
+
+
+def _one_turn_conversation(turn):
+    return {"tenant_id": "acme", "conversation_id": "c-synthetic", "turns": [turn, GOOD_TURN]}
+
+
+GOOD_TURN = {"seq": 1, "role": "customer", "ts": "2026-01-01T00:00:00Z", "text": "hello"}
+
+
+def test_non_object_turn_is_dropped():
+    parsed = parse_conversation(_one_turn_conversation("not a turn object"))
+    assert parsed.dropped_turns == (DroppedTurn(0, "non_object_turn"),)
+
+
+def test_missing_text_key_is_dropped():
+    turn = {"seq": 0, "role": "customer", "ts": "2026-01-01T00:00:00Z"}  # no "text" at all
+    parsed = parse_conversation(_one_turn_conversation(turn))
+    assert parsed.dropped_turns == (DroppedTurn(0, "missing_text"),)
+
+
+def test_non_string_text_on_a_recognised_role_is_dropped():
+    # Distinct from c-000031's turn, where the non-string text is on an
+    # unrecognised role and unknown_role wins first.
+    turn = {"seq": 0, "role": "customer", "ts": "2026-01-01T00:00:00Z", "text": 42}
+    parsed = parse_conversation(_one_turn_conversation(turn))
+    assert parsed.dropped_turns == (DroppedTurn(0, "non_string_text"),)
+
+
+def test_boolean_seq_is_coerced_to_none_not_treated_as_an_int():
+    turn = {"seq": True, "role": "customer", "ts": "2026-01-01T00:00:00Z", "text": "hi"}
+    parsed = parse_conversation(_one_turn_conversation(turn))
+    assert parsed.turns[0].seq is None  # bool is an int subclass; rejected explicitly
+
+
+def test_unparseable_string_seq_is_coerced_to_none():
+    turn = {"seq": "not-a-number", "role": "customer", "ts": "2026-01-01T00:00:00Z", "text": "hi"}
+    parsed = parse_conversation(_one_turn_conversation(turn))
+    assert parsed.turns[0].seq is None

@@ -4,8 +4,9 @@ A worker that pulls completed support conversations off a queue, scores the
 sentiment of each turn, derives two conversation-level metrics, and writes one
 durable result per conversation.
 
-Design of record: ../Architecture_Decision_Record.md
-Build order:      ../Implementation_Details.md
+See the repo root ``README.md`` for how to run it, and for pointers to the
+design-of-record and build-order documents (outside this repo, one level
+above ``SB_Project/`` — not shipped as part of the package).
 """
 
 from pipeline.config import SCHEMA_VERSION, Config

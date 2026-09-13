@@ -1,7 +1,10 @@
 """Layer 5 — apply migrations/*.sql, in filename order, idempotently.
 
-Tracked in a `schema_migrations` table so re-running (`make migrate`, or every
-container start) is a safe no-op once applied.
+Tracked in a `schema_migrations` table so re-running is a safe no-op once
+applied. Not run automatically — it's an explicit step (`make migrate`
+locally, `docker compose run --rm worker migrate` in Docker) before `ingest`
+and `run`, not something the `worker` service's default command does on
+every start.
 
     python -m pipeline.migrate
 """

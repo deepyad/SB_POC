@@ -161,6 +161,23 @@ def test_second_run_finds_nothing_left_to_claim(pool, queue):
     assert second == 0
 
 
+def test_run_sleeps_and_retries_when_not_once(pool, queue, monkeypatch):
+    # once=False loops forever on an empty queue — break out deterministically
+    # via the sleep call itself rather than actually waiting or looping.
+    calls: list[float] = []
+
+    def fake_sleep(seconds: float) -> None:
+        calls.append(seconds)
+        raise KeyboardInterrupt
+
+    monkeypatch.setattr("pipeline.worker.time.sleep", fake_sleep)
+
+    with pytest.raises(KeyboardInterrupt):
+        run(CFG, pool, queue, FAKE, once=False)
+
+    assert calls == [CFG.poll_idle_seconds]
+
+
 # --- process_one, tested directly: poison, missing blob, duplicate skip -------
 
 

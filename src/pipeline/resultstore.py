@@ -5,7 +5,7 @@ commit together, or not at all. No cross-system ack gap to reason about.
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import UTC, datetime
 from typing import Any
 
 from psycopg.types.json import Jsonb
@@ -119,7 +119,9 @@ def get_result(pool: ConnectionPool, tenant_id: str, conversation_id: str) -> di
         "provenance": {
             "model_name": model_name,
             "model_revision": model_revision,
-            "scored_at": scored_at.astimezone(scored_at.tzinfo)
+            # Postgres returns TIMESTAMPTZ already tz-aware; normalise to UTC
+            # explicitly rather than trust whatever tzinfo it happened to carry.
+            "scored_at": scored_at.astimezone(UTC)
             .isoformat(timespec="seconds")
             .replace("+00:00", "Z"),
         },

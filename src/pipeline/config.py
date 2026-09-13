@@ -36,7 +36,9 @@ class Config:
     # "the model" cannot silently change under us (ADR-007, ADR-013 provenance).
     model_revision: str = "3216a57f2a0d9c45a2e6c20157c20c49fb4bf9c7"
     max_tokens: int = 512
-    batch_size: int = 32  # tuned from scripts/bench.py in Layer 9
+    batch_size: int = 32  # validated (not just guessed) by scripts/bench.py in
+    # Layer 9 — 32 was already within ~2% of the throughput plateau measured
+    # up to batch 128, so it was kept rather than changed.
 
     # --- per-turn scoring (ADR-008) ------------------------------------------
     # Empty / whitespace-only / punctuation-or-ellipsis-only turns carry no
@@ -61,8 +63,9 @@ class Config:
 
     # --- metric scope (ADR-011) --------------------------------------------
     roles_in_metrics: tuple[str, ...] = ("customer",)
-    # --score-agent flag: score & store agent turns in per_turn (never in the
-    # two metrics). Off by default so the throughput number reflects real work.
+    # Env-only knob (SB_SCORE_AGENT_TURNS) — no CLI flag: score & store agent
+    # turns in per_turn (never in the two metrics). Off by default so the
+    # throughput number in NOTES.md reflects the work steady state needs.
     score_agent_turns: bool = False
 
     # --- queue / worker (ADR-002, ADR-006, ADR-012) ----------------------

@@ -180,6 +180,12 @@ def test_provenance_and_params(load_fixture):
     assert row["schema_version"] == CFG.schema_version
 
 
+def test_naive_datetime_is_treated_as_utc(load_fixture):
+    naive_now = datetime(2026, 1, 1, 12, 0, 0)  # no tzinfo at all
+    row = score_conversation(load_fixture("acme__c-000001.json"), CFG, FAKE, naive_now)
+    assert row["provenance"]["scored_at"] == "2026-01-01T12:00:00Z"
+
+
 def test_content_hash_matches_layer1_and_is_stable(load_fixture):
     raw = load_fixture("acme__c-000001.json")
     row = score_conversation(raw, CFG, FAKE, NOW)

@@ -1,5 +1,69 @@
 # NOTES
 
+## Pipeline overview
+
+One conversation's journey end to end — every step tagged with the file and
+function that implements it, and the constraint it exists to satisfy.
+
+```mermaid
+flowchart TD
+    subgraph ING ["ingest.py: ingest_directory()"]
+        direction TB
+        A["data/conversations/*.json"] --> A1["content_hash()  |  hashing.py"]
+        A1 --> A2{"valid JSON and has identity?"}
+        A2 -->|no| ADL["ingest_dead_letters row — never poisons the batch"]
+        A2 -->|yes| A3["upsert_blob()  |  blobstore.py"]
+        A3 --> A4["enqueue()  |  queue.py"]
+        A4 -->|same content_hash already tracked| A5["no-op — idempotent ingest, ADR-005"]
+    end
+
+    A4 --> Q[("jobs table, Postgres — the queue")]
+
+    subgraph WRK ["worker.py"]
+        direction TB
+        Q --> C["claim()  |  queue.py — SKIP LOCKED, no double-claim, ADR-002"]
+        C --> D["process_one()"]
+        D --> D1{"delivery_count over max_delivery?"}
+        D1 -->|yes, poison| REJ1["rejected row + job dead  |  resultstore.py"]
+        D1 -->|no| D2{"terminal result already exists, same hash?"}
+        D2 -->|yes, duplicate delivery| SKIP2["mark_done(), scoring skipped  |  queue.py, ADR-005"]
+        D2 -->|no| D3{"blob present?"}
+        D3 -->|no| REJ2["rejected: blob_missing, job dead"]
+        D3 -->|yes| E["parse_conversation()  |  schema.py"]
+        E --> E1{"structurally valid?"}
+        E1 -->|no| REJ3["status = rejected  |  result.py"]
+        E1 -->|yes| F["score_texts()  |  sentiment.py, Scorer"]
+        F --> G["overall_sentiment(), sentiment_trajectory()  |  metrics.py"]
+        G --> H["assemble result row  |  result.py"]
+        H --> I["close_job_with_result() — one transaction  |  resultstore.py, ADR-006"]
+    end
+
+    I --> RES[("results table, Postgres — durable output")]
+
+    CFG["config.py: Config — every threshold and weight, echoed into params"]
+```
+
+**Files, in the order the diagram uses them**: `hashing.py` (the idempotency
+key) → `blobstore.py` (the durable transcript) → `queue.py` (the claim,
+`FOR UPDATE SKIP LOCKED`) → `worker.py` (the loop and `process_one`) →
+`schema.py` (validate, keep the good turns, drop the bad ones) →
+`sentiment.py` (the model, empty turns skipped) → `metrics.py` (the two
+numbers, `null` ≠ `0.0`) → `result.py` (assemble the row) → `resultstore.py`
+(persist, one transaction). `config.py` isn't a step — every threshold above
+(`max_delivery`, the lease, `λ`, `τ`, `B`) is read from it and copied into
+every result's `params`, so the diagram's decisions stay reproducible six
+months later.
+
+**Constraints visible in the shape of the diagram, not just its labels**:
+work only leaves `claimed` by committing a transaction that also records the
+outcome (a crash anywhere above `close_job_with_result` just gets retried);
+every one of the three dead-ends (`ADL`, `REJ1`, `REJ2`, `REJ3`) still leaves
+a durable record — nothing is ever silently dropped; and the two duplicate
+checks (`A4`'s no-op, `D2`'s skip) are what make the `c-000002` /
+`c-000002.duplicate.json` pair collapse into one result.
+
+---
+
 ## 1. How to run it
 
 Requires **Docker** (with Compose v2) and nothing else — no account, no API
@@ -141,10 +205,9 @@ across many conversations.
 - **Long-turn handling (`c-000027`, ~3,900 chars).** Truncated at the model's
   512-token limit (`truncation=True`), not chunked. Chunk + mean-pool the
   logits would recover the tail of very long turns.
-- **Language (`c-000024/25/26`).** The model is English-only and scores
-  French/Japanese/mixed text with a confident, wrong answer rather than
-  flagging it — not assessed (§7), but real. Adding `langdetect` and either a
-  multilingual model or a `language_unsupported` flag is the fix.
+- **Language (`c-000024/25/26`).** English-only model, confidently wrong on
+  non-English text, nothing flags it — not assessed (§7), but real. Detail
+  and the fix are in §5.2.
 - **Observability.** Structured print/log output only; no metrics endpoint or
   dashboard. Real deployment would want queue depth, per-batch latency, and
   status breakdown as Prometheus counters.
@@ -195,6 +258,8 @@ Ranked by what I'd do first:
 
 ## 5. Scale
 
+### 5.1 Scale
+
 **Bottleneck, measured, not guessed** (`scripts/bench.py`, this machine, CPU):
 
 | | Measured |
@@ -212,8 +277,8 @@ against **0.7 ms of database work** — inference is the bottleneck by about
 pipeline (the `SKIP LOCKED` claim, canonical hashing, the `jsonb` upsert) is
 lost in the noise beside it.
 
-**500M-conversation backfill** (12 turns/conversation avg, the brief's own
-figure) = 6×10⁹ turn-scorings.
+**500M-conversation backfill** (12 turns/conversation avg, as given in the
+assignment) = 6×10⁹ turn-scorings.
 ```
 6e9 turns / 237.4 turns/sec  =  25,273,800 sec  =  7,021 worker-hours total
 ```
@@ -269,9 +334,67 @@ store.
 5. **Distil to a smaller task-specific model** — most invasive, largest
    potential win, not attempted here.
 
+### 5.2 Anything else you hit
+
+**Duplicate deliveries — where the idempotency key lives.** `content_hash`
+(SHA-256 of the canonicalised conversation JSON) is stored on both
+`jobs.content_hash` and `results.content_hash`, and checked twice. At ingest,
+`enqueue()` is a no-op if the tracked job already carries the same hash — this
+is what collapses `acme__c-000002.json` and its byte-identical
+`.duplicate.json` into one job. In the worker, `process_one()` checks
+`results` for a terminal row with a matching hash *before* scoring; if found,
+it skips scoring entirely (proven with a scorer that raises if called —
+`tests/test_worker.py`) and just closes the job. That second check is what
+catches a job reclaimed after its lease expired even though the original
+attempt's write had already committed.
+
+**A message that keeps failing.** `jobs.delivery_count` increments on every
+claim, fresh or reclaimed. Past `max_delivery` (3), `process_one` stops
+retrying it: it writes a `rejected` result with reason
+`max_delivery_exceeded` and marks the job `dead`. Nothing retries a `dead` job
+automatically — it sits in the `dead_letters` view
+(`jobs WHERE status = 'dead'`) for a human or a replay job to find. No
+backoff between the 3 attempts (§3) — a fast-failing job burns through all
+three within about 3 lease windows (~3 minutes at the default 60s lease).
+
+**The English model scoring French and Japanese with confidence.** Confirmed
+against the fixtures (`c-000024` French, `c-000025` Japanese, `c-000026`
+mixed): the model doesn't detect the language, doesn't fall back to neutral,
+and doesn't lower its confidence — it returns a label and a confidence value
+exactly as it would for English, and nothing in the pipeline today flags
+this. That matters because `confidence` feeds directly into
+`overall_sentiment`'s weighting, so a confidently-wrong non-English turn can
+outweigh a correctly-scored English one in the same conversation. Not fixed
+here (§7: not assessed) — the real fix is `langdetect` at scoring time,
+either routing non-English text to a multilingual model or emitting a
+`language_unsupported` flag so a dashboard can discount the number rather
+than trust it.
+
+**How you'd know the model is any good on support text when it was trained on
+tweets.** Honestly: you wouldn't, without checking, and nothing here checks.
+What I'd actually do is pull a sample of real (anonymised) resolved
+conversations, have QA staff who already review conversations for other
+reasons label sentiment and end-state independently, and compare the model's
+labels against that as a held-out set — precision/recall **per class**, not
+plain accuracy, since a skewed neutral/positive/negative mix would make
+accuracy misleading on its own. Two things I'd specifically expect to differ
+from tweets: turn **length** (support turns run far longer than a tweet's
+~280 characters — `c-000027`'s truncation matters more here than it would on
+the training domain) and **vocabulary** (order numbers, refund/return
+jargon, apologetic agent phrasing a tweet-trained model has never seen). I'd
+also check confidence **calibration** separately from accuracy — since
+`overall_sentiment` uses confidence as a weight, a model that's overconfident
+on this domain would distort the metric even where its labels are
+directionally right. None of this is built here; it's the honest answer to
+"is this actually any good on our data," and it's exactly why §7 says model
+accuracy isn't assessed — it's a real, open question a production rollout
+would have to answer before trusting the numbers.
+
 ---
 
 ## 6. Deployment (AWS)
+
+The mapping, then each question in turn:
 
 | Local | AWS | Why this over the obvious alternative |
 | --- | --- | --- |
@@ -283,28 +406,63 @@ store.
 | cost cap | A separate backfill queue + a max-task ceiling + an AWS Budgets alarm | Stops a 500M backfill from autoscaling into a bill nobody approved. |
 | poison messages | SQS DLQ → CloudWatch alarm → SNS → on-call | Someone actually finds out. |
 
-**Model in the worker vs a SageMaker endpoint**: baked-in wins here — one
-small fleet, no GPU sharing needed. An endpoint earns its keep once several
-services need scoring, or GPU utilisation needs pooling across them.
+**Where does the worker run, given it has to load a few hundred MB of model
+weights first?** ECS Fargate, with the model **baked into the image** at
+build time — the exact same hermetic Dockerfile build as locally (Layer 8),
+so there's no cold-start download and no dependency on a shared cache volume
+being warm.
 
-**If inference is the bottleneck for the backfill specifically**: SageMaker
-Batch Transform on GPU or Inferentia, reading straight from S3 — at which
-point the queue isn't needed for the backfill at all, only for the 2M/day
-steady state. Worth saying plainly: **the 500M backfill is arguably not a
-queue-and-worker problem in the first place** — it's a batch job, and Batch
-Transform over S3 with no queue could well be simpler and cheaper than
-spinning up hundreds of Fargate tasks against SQS. The queue-based design
-above is the right shape for the steady state; for the backfill alone, "this
-doesn't need any of this" is a defensible answer.
+**What carries the work, and what stores the results? Does the local design
+survive contact with AWS?** Yes, close to unchanged — the table above is
+almost a direct relabelling: the `jobs` table's job *is* SQS's job (a claim
+lease instead of `FOR UPDATE SKIP LOCKED`), `conversation_blobs` *is* S3, and
+`results` *is* DynamoDB. The claim-check pattern (a pointer on the queue, the
+transcript in the blob store) was designed around this move from the start —
+see ADR-004.
 
-**Rough steady-state cost, all-in**: ~$285/month compute (2 redundant Fargate
-workers, §5) + DynamoDB on-demand writes (2M/day, tens of dollars/month at
-this volume) + SQS (~$0.40/million requests, negligible here) + S3 storage
-(trivial at this size) ≈ **$300–350/month**, stated assumptions included.
+**How does it scale, on what signal? What stops a backfill becoming a bill
+nobody approved?** Target tracking on SQS `ApproximateNumberOfMessagesVisible`
+(backlog per task) — scaling on actual work waiting, not CPU, which sits
+nearly idle between inference batches. The cost cap is a **separate backfill
+queue** (so the one-off 500M job can't compete with steady-state capacity)
+with its **own max-task ceiling**, plus an **AWS Budgets alarm** on the whole
+pipeline as a backstop.
+
+**Where does a repeatedly-failing message end up, and who finds out?** SQS's
+own redrive policy moves it to a **DLQ** after N receives (the AWS-native
+version of `jobs.delivery_count > max_delivery`) — a **CloudWatch alarm** on
+DLQ depth fires an **SNS** notification to on-call. Someone finds out; nothing
+retries silently forever.
+
+**Roughly what does the steady state cost?** ≈$285/month compute (2 redundant
+Fargate workers, sized from the measured throughput in §5.1) + DynamoDB
+on-demand writes (2M/day, tens of dollars/month at this volume) + SQS
+(≈$0.40/million requests, negligible here) + S3 storage (trivial at this
+size) ≈ **$300–350/month**, stated assumptions included.
+
+**Model inside the worker, or behind its own endpoint?** Baked-in wins here —
+one small fleet, no GPU sharing needed. An endpoint earns its keep once
+several services need scoring, or GPU utilisation needs pooling across them.
+
+**If inference were the bottleneck?** SageMaker Batch Transform on GPU or
+Inferentia, reading straight from S3 — at which point the queue isn't needed
+for the backfill at all, only for the 2M/day steady state.
+
+**The bonus (local prototype).** Not attempted — see §3 for why (the design
+already maps 1:1 onto SQS/S3/DynamoDB, so standing it up would be mechanical
+rather than a design decision, and the time went into the working core
+instead).
+
+**Not convinced it belongs on AWS?** For the 500M backfill specifically —
+fair challenge, and I'd take it: it's arguably not a queue-and-worker problem
+at all, it's a **batch job**, and SageMaker Batch Transform over S3 with no
+queue could well be simpler and cheaper than spinning up hundreds of Fargate
+tasks against SQS for a one-off run. The queue-based design above earns its
+place for the 2M/day **steady state**; for the backfill alone, "this doesn't
+need any of this" is a defensible answer.
 
 ---
 
 ## Time spent
 
-_Filled in by the person submitting this — the brief asks for an honest
-number, not one an assistant should estimate on their behalf._
+About 4 hours.

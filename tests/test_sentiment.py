@@ -64,6 +64,15 @@ def test_empty_and_whitespace_and_punctuation_not_scored(scorer):
     assert all(r.signed is None and r.confidence is None and r.label is None for r in results)
 
 
+def test_batch_size_override_does_not_change_the_answer(scorer):
+    texts = ["Great job, thank you!", "This is terrible.", "Could you confirm the price?"]
+    default_batch = scorer.score_texts(texts)
+    one_at_a_time = scorer.score_texts(texts, batch_size=1)
+    for a, b in zip(default_batch, one_at_a_time, strict=True):
+        assert a.label == b.label
+        assert a.signed == pytest.approx(b.signed, abs=1e-4)
+
+
 def test_emoji_only_is_scored(scorer):
     for text in ("😡😡😡", "👍"):
         [score] = scorer.score_texts([text])

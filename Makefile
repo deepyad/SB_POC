@@ -3,22 +3,40 @@
 
 PY ?= python3
 
-.PHONY: install test lint fmt smoke clean
+.PHONY: install test lint fmt smoke clean up down db-reset migrate db-shell
 
 install:            ## editable install with dev tools (add ,model / ,db in later layers)
 	$(PY) -m pip install -e ".[dev]"
 
-test:              ## fast tests only — no model download needed
-	$(PY) -m pytest -m "not slow"
+test:              ## fast tests only — no model, no Docker needed
+	$(PY) -m pytest -m "not slow and not db"
 
 test-slow:         ## tests needing the sentiment model (downloads ~500MB on first run)
 	$(PY) -m pytest -m slow
+
+test-db:           ## tests needing Docker (spin up throwaway Postgres via testcontainers)
+	$(PY) -m pytest -m db
 
 test-all:          ## everything
 	$(PY) -m pytest
 
 warm-model:        ## download + cache the pinned model revision
 	$(PY) -m pipeline.warm_model
+
+up:                ## start Postgres in the background (Layer 5+)
+	docker compose up -d postgres
+
+down:              ## stop containers, keep the data volume
+	docker compose down
+
+db-reset:          ## stop containers AND drop the data volume
+	docker compose down -v
+
+migrate:           ## apply migrations/*.sql (idempotent)
+	$(PY) -m pipeline.migrate
+
+db-shell:          ## open a psql shell in the running container
+	docker compose exec postgres psql -U sb -d sb
 
 lint:              ## static checks
 	$(PY) -m ruff check .

@@ -38,6 +38,10 @@ migrate:           ## apply migrations/*.sql (idempotent)
 db-shell:          ## open a psql shell in the running container
 	docker compose exec postgres psql -U sb -d sb
 
+DIR ?= data/conversations
+ingest:            ## load a directory of conversations into the queue (Layer 6+)
+	$(PY) -m pipeline ingest $(DIR)
+
 lint:              ## static checks
 	$(PY) -m ruff check .
 

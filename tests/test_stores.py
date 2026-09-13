@@ -6,13 +6,19 @@ Marked `db`; excluded from the default `make test`.
 from __future__ import annotations
 
 import pytest
-from testcontainers.postgres import PostgresContainer
 
-from pipeline.blobstore import blob_key, get_blob, upsert_blob
-from pipeline.config import Config
-from pipeline.db import open_pool
-from pipeline.migrate import apply_migrations
-from pipeline.resultstore import close_job_with_result, get_result
+# Skip (not error) this whole module when the `db` extra isn't installed, so
+# `make test` (fast tier) still collects cleanly on a Layer 0-4-only install.
+pytest.importorskip("testcontainers")
+pytest.importorskip("psycopg_pool")
+
+from testcontainers.postgres import PostgresContainer  # noqa: E402
+
+from pipeline.blobstore import blob_key, get_blob, upsert_blob  # noqa: E402
+from pipeline.config import Config  # noqa: E402
+from pipeline.db import open_pool  # noqa: E402
+from pipeline.migrate import apply_migrations  # noqa: E402
+from pipeline.resultstore import close_job_with_result, get_result  # noqa: E402
 
 pytestmark = pytest.mark.db
 

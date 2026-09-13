@@ -11,7 +11,7 @@ result per conversation.
 
 ## Status
 
-Built layer by layer. Current: **Layer 5 — storage (Postgres).**
+Built layer by layer. Current: **Layer 6 — queue + ingest.**
 
 | Layer | State |
 | --- | --- |
@@ -21,7 +21,7 @@ Built layer by layer. Current: **Layer 5 — storage (Postgres).**
 | 3 The two metrics | ✅ |
 | 4 Result assembly | ✅ |
 | 5 Storage (Postgres) | ✅ |
-| 6 Queue + ingest | ⬜ |
+| 6 Queue + ingest | ✅ |
 | 7 Worker loop | ⬜ |
 | 8 Packaging / clean clone | ⬜ |
 | 9 Throughput + NOTES.md | ⬜ |
@@ -60,8 +60,15 @@ Layer 5 needs Docker and the `db` extra:
 pip install -e ".[dev,db]"
 make up          # docker compose up -d postgres
 make migrate     # applies migrations/*.sql, idempotent
-make test-db     # storage tests via testcontainers (own throwaway Postgres,
-                 # independent of `make up`)
+make test-db     # storage/queue tests via testcontainers (own throwaway
+                 # Postgres, independent of `make up`)
+```
+
+Layer 6 loads a directory of conversations into the queue, de-duplicated:
+
+```bash
+make ingest DIR=data/conversations
+# files_seen=28 enqueued=27 already_tracked=1 parse_errors=0
 ```
 
 `.vscode/settings.json` points the Python extension at `.venv` and turns on

@@ -11,7 +11,7 @@ result per conversation.
 
 ## Status
 
-Built layer by layer. Current: **Layer 4 — result assembly.**
+Built layer by layer. Current: **Layer 5 — storage (Postgres).**
 
 | Layer | State |
 | --- | --- |
@@ -20,7 +20,7 @@ Built layer by layer. Current: **Layer 4 — result assembly.**
 | 2 Sentiment model wrapper | ✅ |
 | 3 The two metrics | ✅ |
 | 4 Result assembly | ✅ |
-| 5 Storage (Postgres) | ⬜ |
+| 5 Storage (Postgres) | ✅ |
 | 6 Queue + ingest | ⬜ |
 | 7 Worker loop | ⬜ |
 | 8 Packaging / clean clone | ⬜ |
@@ -52,6 +52,16 @@ involved, just a dict in, a dict out:
 
 ```bash
 python -m pipeline score-file data/conversations/acme__c-000001.json
+```
+
+Layer 5 needs Docker and the `db` extra:
+
+```bash
+pip install -e ".[dev,db]"
+make up          # docker compose up -d postgres
+make migrate     # applies migrations/*.sql, idempotent
+make test-db     # storage tests via testcontainers (own throwaway Postgres,
+                 # independent of `make up`)
 ```
 
 `.vscode/settings.json` points the Python extension at `.venv` and turns on

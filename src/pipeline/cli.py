@@ -64,6 +64,60 @@ def _cmd_ingest(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_run(args: argparse.Namespace) -> int:
+    from pipeline.db import open_pool
+    from pipeline.queue import PgJobQueue
+    from pipeline.sentiment import Scorer  # heavy import — only on the path that scores
+    from pipeline.worker import run
+
+    cfg = Config.from_env()
+    pool = open_pool(cfg.database_url)
+    try:
+        queue = PgJobQueue(pool)
+        scorer = Scorer(cfg)
+        processed = run(cfg, pool, queue, scorer, once=args.once)
+        print(f"processed={processed}")
+    finally:
+        pool.close()
+    return 0
+
+
+def _cmd_results(args: argparse.Namespace) -> int:
+    from pipeline.db import open_pool
+
+    cfg = Config.from_env()
+    pool = open_pool(cfg.database_url)
+    try:
+        with pool.connection() as conn:
+            if args.summary:
+                rows = conn.execute(
+                    "SELECT status, count(*) FROM results GROUP BY 1 ORDER BY 1"
+                ).fetchall()
+                for status, count in rows:
+                    print(f"{status}: {count}")
+            else:
+                rows = conn.execute(
+                    "SELECT tenant_id, conversation_id, status, overall_sentiment, "
+                    "sentiment_trajectory FROM results ORDER BY tenant_id, conversation_id"
+                ).fetchall()
+                for tenant_id, conversation_id, status, overall, trajectory in rows:
+                    print(
+                        json.dumps(
+                            {
+                                "tenant_id": tenant_id,
+                                "conversation_id": conversation_id,
+                                "status": status,
+                                "overall_sentiment": overall,
+                                "sentiment_trajectory": trajectory,
+                            },
+                            ensure_ascii=False,
+                        )
+                    )
+    finally:
+        pool.close()
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="python -m pipeline")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -79,6 +133,18 @@ def build_parser() -> argparse.ArgumentParser:
     )
     ingest.add_argument("directory", help="directory of conversation JSON files")
     ingest.set_defaults(func=_cmd_ingest)
+
+    run = sub.add_parser("run", help="claim and score jobs from the queue")
+    run.add_argument(
+        "--once", action="store_true", help="drain the currently queued jobs, then exit"
+    )
+    run.set_defaults(func=_cmd_run)
+
+    results = sub.add_parser("results", help="dump results, or a status summary")
+    results.add_argument(
+        "--summary", action="store_true", help="print counts by status instead of full rows"
+    )
+    results.set_defaults(func=_cmd_results)
 
     return parser
 
